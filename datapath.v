@@ -26,7 +26,6 @@ Registers registers (
 );
 
 
-
 always @(posedge clock)
 begin
 	oInstruction <= instruction;
