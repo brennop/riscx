@@ -9,21 +9,47 @@ module TopDE (
 	input clock,
 	output [31:0] Instruction,
 	output [31:0] registerRead1,
-	output [31:0] registerRead2
+	output [31:0] registerRead2,
+	output [31:0] PC,
+	output [31:0] ReadData,
+	
+	output [4:0] RS1,
+	output [4:0] RS2,
+	output [4:0] Rd,
+	
+	output [1:0] OrigWriteData,
+	output MemRead,
+	output [1:0] OrigPC,
+	output [3:0] ALUControl,
+	output MemWrite,
+	output OrigULA,
+	output RegWrite,
+	
+	output [31:0] AluResult
 );
 
-wire [31:0] mInstr, mRead1, mRead2;
-
-assign Instruction = mInstr;
-assign registerRead1 = mRead1;
-assign registerRead2 = mRead2;
+assign RS1 = Instruction[19:15];
+assign RS2 = Instruction[24:20];
+assign Rd = Instruction[11:7];
 
 
 Datapath dp (
 	.clock(clock), 
-	.oInstruction(mInstr), 
-	.oRegisterRead1(mRead1), 
-	.oRegisterRead2(mRead2)
+	.oInstruction(Instruction), 
+	.oRegisterRead1(registerRead1), 
+	.oRegisterRead2(registerRead2),
+	.oPC(PC),
+	.oDataRead(ReadData),
+	
+	.dOrigWriteData(OrigWriteData),
+	.dMemRead(MemRead),
+	.dOrigPC(OrigPC),
+	.dALUControl(ALUControl),
+	.dMemWrite(MemWrite),
+	.dOrigULA(OrigULA),
+	.dRegWrite(RegWrite),
+	
+	.dAluResult(AluResult)
 );
 
 endmodule

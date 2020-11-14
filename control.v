@@ -16,7 +16,7 @@ module Control (
 
 wire [6:0] opcode = instruction[6:0];
 wire [2:0] funct3 = instruction[14:12];
-
+wire [6:0] funct7	= instruction[31:25];
 
 always @*
 	case(opcode)
@@ -47,14 +47,14 @@ always @*
 			OrigPC  <= PC4;
 			MemWrite <= TRUE;
 			OrigULA <= ORIG_IMM;
-			RegWrite <= FALSE;
+			RegWrite <= TRUE;
 			
 			case(funct3)
-				FUNCT3_ADD: ALUControl <= ALU_ADD;
-				FUNCT3_SUB: ALUControl <= ALU_SUB;
+				FUNCT3_ADD: ALUControl <= (funct7 == 7'b0100000) ? ALU_SUB : ALU_ADD;
 				FUNCT3_SLT: ALUControl <= ALU_SLT;
 				FUNCT3_OR : ALUControl <= ALU_OR;
 				FUNCT3_AND: ALUControl <= ALU_AND;
+				default: 	ALUControl <= ALU_ADD;
 			endcase
 		end
 		BRANCH:
@@ -76,6 +76,16 @@ always @*
 			MemWrite <= FALSE;
 			OrigULA <= DONT_CARE;
 			RegWrite <= FALSE;
+		end
+		default:
+		begin
+			OrigWriteData <= ORIG_ANY;
+			MemRead <= DONT_CARE;
+			OrigPC  <= ORIG_ANY;
+			ALUControl <= ALU_ADD;
+			MemWrite <= DONT_CARE;
+			OrigULA <= DONT_CARE;
+			RegWrite <= DONT_CARE;
 		end
 	endcase
 

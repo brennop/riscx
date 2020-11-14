@@ -7,16 +7,27 @@ module Datapath (
 	input clock,
 	
 	/* sinais de debug */
-	output reg [31:0] oInstruction,
-	output reg [31:0] oRegisterRead1,
-	output reg [31:0] oRegisterRead2
+	output [31:0] oPC,
+	output [31:0] oInstruction,
+	output [31:0] oRegisterRead1,
+	output [31:0] oRegisterRead2,
+	output [31:0] oDataRead,
+		
+	output [1:0] dOrigWriteData,
+	output dMemRead,
+	output [1:0] dOrigPC,
+	output [3:0] dALUControl,
+	output dMemWrite,
+	output dOrigULA,
+	output dRegWrite,
+	
+	output dAluResult
 );
 
 reg [31:0] pc = 32'b0;
-reg [31:0] pcNext;
+wire [31:0] pcNext;
+wire [31:0] pc4;
 wire [31:0] instruction;
-
-wire writeRegister;
 
 wire [31:0] registerRead1, 
 				registerRead2;
@@ -38,12 +49,15 @@ wire RegWrite;					// Se vamos escrever em Rd
 // ALU
 wire [31:0] aluResult;
 
+assign pc4 = pc + 4;
+
 // Multiplexadores
 always @*
 	case(OrigPC)
-		PC4: 		pcNext <= pc + 32'd4;
-		PCBEQ: 	pcNext <= pc + 32'd4;
+		PC4: 		pcNext <= pc4;
+		PCBEQ: 	pcNext <= pc4;
 		PCIMM: 	pcNext <= pc + immediate;
+		default: pcNext <= pc4;
 	endcase
 	
 always @*
@@ -51,11 +65,15 @@ always @*
 		ORIG_MEM: dataToWrite <= readData;
 		ORIG_ALU: dataToWrite <= aluResult;
 		ORIG_PC4: dataToWrite <= pc + 32'd4;
+		default:  dataToWrite <= 32'b0;
 	endcase
 
 	
 // Instanciação das Estruturas
-InstructionMemory instructionMemory (pc, instruction);
+InstructionMemory instructionMemory (
+	.address(pc), 
+	.instruction(instruction)
+);
 
 DataMemory dataMemory (
 	.clock(clock),
@@ -73,12 +91,13 @@ ImmediateGenerator immGen (
 
 Registers registers (
 	.clock(clock), 
-	.writeRegister(writeRegister), 
+	.writeRegister(RegWrite), 
 	.rs1(instruction[19:15]), 
 	.rs2(instruction[24:20]), 
 	.rd(instruction[11:7]), 
 	.registerRead1(registerRead1), 
-	.registerRead2(registerRead2)
+	.registerRead2(registerRead2),
+	.dataToWrite(dataToWrite)
 );
 
 Control control (
@@ -92,13 +111,32 @@ Control control (
 	.RegWrite(RegWrite)	
 );
 
+ALU alu (
+	.iControl(ALUControl),
+	.iA(registerRead1),
+	.iB(registerRead2),
+	.oResult(aluResult)
+);
+
+assign oInstruction = instruction;
+assign oRegisterRead1 = registerRead1;
+assign oRegisterRead2 = registerRead2;
+assign oDataRead = readData;
+assign oPC = pc;
+
+assign dOrigWriteData = OrigWriteData;
+assign dMemRead = MemRead;
+assign dOrigPC = OrigPC;
+assign dALUControl = ALUControl;
+assign dMemWrite = MemWrite;
+assign dOrigULA = OrigULA;
+assign dRegWrite = RegWrite;
+
+assign dAluResult = aluResult;
 
 always @(posedge clock)
 begin
-	oInstruction <= instruction;
-	oRegisterRead1 <= registerRead1;
-	oRegisterRead2 <= registerRead2;
-	pc <= pc + 32'h04;
+	pc <= pcNext;
 end
 
 endmodule
