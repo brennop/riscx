@@ -1,6 +1,6 @@
 module Control (
 	input [31:0] instruction,
-	output wire Mem2Reg,
+	output wire [1:0] OrigWriteData,
 	output wire MemRead,
 	output wire [1:0] OrigPC,
 	output wire [3:0] ALUControl,
@@ -24,12 +24,17 @@ parameter
 	FALSE		= 1'b0,
 	DONT_CARE	= 1'bx,
 	
-	PC4		= 2'b0,
-	PCBEQ		= 2'b1,
-	PCIMM		= 2'b2,
+	PC4		= 2'd0,
+	PCBEQ		= 2'd1,
+	PCIMM		= 2'd2,
 	
 	ORIG_REG = 1'b0,
 	ORIG_IMM	= 1'b1,
+	
+	ORIG_MEM = 2'd0,
+	ORIG_ALU = 2'd1,
+	ORIG_PC4 = 2'd2,
+	ORIG_ANY = 2'bxx,
 	
 	FUNCT3_ADD			= 3'b000,
 	FUNCT3_SUB			= 3'b000,
@@ -42,7 +47,7 @@ always @*
 	case(opcode)
 	begin
 		LOAD:
-			Mem2Reg <= TRUE;
+			OrigWriteData <= ORIG_MEM;
 			MemRead <= TRUE;
 			OrigPC  <= PC4;
 			//TODO ALUControl <= sum??
@@ -50,7 +55,7 @@ always @*
 			OrigULA <= ORIG_IMM;
 			RegWrite <= TRUE;
 		STORE:
-			Mem2Reg <= DONT_CARE;
+			OrigWriteData <= ORIG_ANY;
 			MemRead <= FALSE;
 			OrigPC  <= PC4;
 			//TODO ALUControl <= sum??
@@ -58,7 +63,7 @@ always @*
 			OrigULA <= ORIG_IMM;
 			RegWrite <= FALSE;
 		TIPOR:
-			Mem2Reg <= FALSE;
+			OrigWriteData <= ORIG_ALU;
 			MemRead <= FALSE;
 			OrigPC  <= PC4;
 			MemWrite <= TRUE;
@@ -74,14 +79,21 @@ always @*
 				FUNCT3_AND: ALUControl <= ALU_AND;
 			end
 		BRANCH:
-			Mem2Reg <= DONT_CARE;
+			OrigWriteData <= ORIG_ANY;
 			MemRead <= FALSE;
 			OrigPC  <= PCBEQ;
 			ALUControl <= ALU_SUB;
 			MemWrite <= FALSE;
-			OrigULA <= ORIG_REG;
+			OrigULA <= DONT_CARE;
 			RegWrite <= FALSE;
 		JUMP:
+			OrigWriteData <= ORIG_PC4;
+			MemRead <= FALSE;
+			OrigPC  <= PCIMM;
+			ALUControl <= ALU_ADD;
+			MemWrite <= FALSE;
+			OrigULA <= DONT_CARE;
+			RegWrite <= FALSE;
 	end
 
 endmodule
