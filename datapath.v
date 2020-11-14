@@ -50,12 +50,13 @@ wire RegWrite;					// Se vamos escrever em Rd
 wire [31:0] aluResult;
 
 assign pc4 = pc + 4;
+assign pcImm = pc + immediate;
 
 // Multiplexadores
 always @*
 	case(OrigPC)
 		PC4: 		pcNext <= pc4;
-		PCBEQ: 	pcNext <= pc4;
+		PCBEQ: 	pcNext <= (registerRead1 == registerRead2 ? immediate : pc4);
 		PCIMM: 	pcNext <= pc + immediate;
 		default: pcNext <= pc4;
 	endcase
