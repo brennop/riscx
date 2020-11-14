@@ -1,5 +1,10 @@
 /* TopDE.v */
 
+
+`ifndef PARAM
+	`include "params.v"
+`endif
+
 module TopDE (
 	input clock,
 	output [31:0] Instruction,
