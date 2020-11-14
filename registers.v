@@ -12,7 +12,7 @@ initial
 begin
 	registers[0] = 32'd0;
 	registers[1] = 32'd0;
-	registers[2] = 8'hff; // SP
+	registers[2] = 32'h3fc; // SP = 255 * 4
 	registers[3] = 32'd0;
 	registers[4] = 32'd0;
 	registers[5] = 32'd0;

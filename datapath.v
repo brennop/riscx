@@ -17,7 +17,9 @@ reg [31:0] pcNext;
 wire [31:0] instruction;
 
 wire writeRegister;
-wire [31:0] registerRead1, registerRead2;
+
+wire [31:0] registerRead1, 
+				registerRead2;
 wire [31:0] dataToWrite; 	// O que será escrito em Rd
 
 wire [31:0] immediate;
@@ -54,6 +56,15 @@ always @*
 	
 // Instanciação das Estruturas
 InstructionMemory instructionMemory (pc, instruction);
+
+DataMemory dataMemory (
+	.clock(clock),
+	.write(MemWrite),
+	.read(MemRead),
+	.iAddress(aluResult),
+	.iData(registerRead1),
+	.oData(readData)
+);
 
 ImmediateGenerator immGen (
 	.iInstruction(instruction),
