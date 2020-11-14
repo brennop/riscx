@@ -1,0 +1,6 @@
+*lock
+*.bak
+output_files/
+db/
+incremental_db/
+simulation/
