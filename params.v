@@ -6,7 +6,7 @@ parameter
 	LOAD 		= 7'b0000011,
 	STORE 	= 7'b0100011,
 	TIPOR 	= 7'b0110011,
-	TUPOI		= 7'b0010011,
+	TIPOI		= 7'b0010011,
 	BRANCH	= 7'b1100011,
 	JUMP		= 7'b1101111,
 	

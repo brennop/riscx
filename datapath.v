@@ -51,7 +51,14 @@ always @*
 		ORIG_PC4: dataToWrite <= pc + 32'd4;
 	endcase
 
+	
+// Instanciação das Estruturas
 InstructionMemory instructionMemory (pc, instruction);
+
+ImmediateGenerator immGen (
+	.iInstruction(instruction),
+	.oImmediate(immediate)
+);
 
 Registers registers (
 	.clock(clock), 
