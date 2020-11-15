@@ -21,10 +21,9 @@ begin
 	if(write && !read) MD[iAddress>>2] <= iData;
 end
 
-always @(*)
+always @(negedge clock)
 begin
 	if(read && !write) oData <= MD[iAddress>>2];
-	else oData <= 32'b0;
 end
 
 endmodule

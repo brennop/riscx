@@ -12,6 +12,7 @@ module Datapath (
 	output [31:0] oRegisterRead1,
 	output [31:0] oRegisterRead2,
 	output [31:0] oDataRead,
+	output [31:0] oDataToWrite,
 		
 	output [1:0] dOrigWriteData,
 	output dMemRead,
@@ -22,7 +23,9 @@ module Datapath (
 	output dRegWrite,
 	
 	output [31:0] dAluResult,
-	output [31:0] dImmediate
+	output [31:0] dImmediate,
+	output [31:0] Register
+//	output [31:0] RAM [0:3]
 );
 
 reg [31:0] pc = 32'b0;
@@ -93,8 +96,9 @@ DataMemory dataMemory (
 	.write(MemWrite),
 	.read(MemRead),
 	.iAddress(aluResult),
-	.iData(registerRead1),
+	.iData(registerRead2),
 	.oData(readData)
+//	.RAM(RAM)
 );
 
 ImmediateGenerator immGen (
@@ -110,7 +114,8 @@ Registers registers (
 	.rd(instruction[11:7]), 
 	.registerRead1(registerRead1), 
 	.registerRead2(registerRead2),
-	.dataToWrite(dataToWrite)
+	.dataToWrite(dataToWrite),
+	.watch(Register)
 );
 
 Control control (
@@ -147,6 +152,8 @@ assign dRegWrite = RegWrite;
 
 assign dAluResult = aluResult;
 assign dImmediate = immediate;
+
+assign oDataToWrite = dataToWrite;
 
 always @(posedge clock)
 begin

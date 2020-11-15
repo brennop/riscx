@@ -3,7 +3,8 @@ module Registers (
 	input wire [4:0] rs1, rs2, rd,
 	input wire [31:0] dataToWrite,
 	
-	output wire [31:0] registerRead1, registerRead2
+	output wire [31:0] registerRead1, registerRead2,
+	output [31:0] watch
 );
 
 reg [31:0] registers[31:0];
@@ -46,6 +47,7 @@ end
 
 assign registerRead1 = registers[rs1];
 assign registerRead2 = registers[rs2];
+assign watch = registers[18];
 
 always @(posedge clock) 
 begin
