@@ -18,15 +18,19 @@ module Datapath (
 	output [1:0] dOrigPC,
 	output [3:0] dALUControl,
 	output dMemWrite,
-	output dOrigULA,
+	output dOrigALU,
 	output dRegWrite,
 	
-	output dAluResult
+	output [31:0] dAluResult,
+	output [31:0] dImmediate
 );
 
 reg [31:0] pc = 32'b0;
+
 wire [31:0] pcNext;
 wire [31:0] pc4;
+wire [31:0] pcImm;
+
 wire [31:0] instruction;
 
 wire [31:0] registerRead1, 
@@ -37,13 +41,15 @@ wire [31:0] immediate;
 
 wire [31:0] readData; 		// O que foi lido da mem dados
 
+wire [31:0] aluInputB;
+
 // Sinais / Fios de Controle
 wire [1:0] OrigWriteData;	// Origem do que será escrito em rd
 wire MemRead;					// Se vamos ler da memória de dados
 wire [1:0] OrigPC;			// Origem do que será escrito em pc
 wire [3:0] ALUControl;		// Instrução a ser executada na ALU
 wire MemWrite;					// Se vamos escrever na mem de dados
-wire OrigULA;					// Origem do segundo arg da ALU
+wire OrigALU;					// Origem do segundo arg da ALU
 wire RegWrite;					// Se vamos escrever em Rd
 
 // ALU
@@ -56,8 +62,8 @@ assign pcImm = pc + immediate;
 always @*
 	case(OrigPC)
 		PC4: 		pcNext <= pc4;
-		PCBEQ: 	pcNext <= (registerRead1 == registerRead2 ? immediate : pc4);
-		PCIMM: 	pcNext <= pc + immediate;
+		PCBEQ: 	pcNext <= (registerRead1 == registerRead2 ? pcImm : pc4);
+		PCIMM: 	pcNext <= pcImm;
 		default: pcNext <= pc4;
 	endcase
 	
@@ -67,6 +73,12 @@ always @*
 		ORIG_ALU: dataToWrite <= aluResult;
 		ORIG_PC4: dataToWrite <= pc + 32'd4;
 		default:  dataToWrite <= 32'b0;
+	endcase
+
+always @*
+	case(OrigALU)
+		ORIG_REG: aluInputB <= registerRead2;
+		ORIG_IMM: aluInputB <= immediate;
 	endcase
 
 	
@@ -108,14 +120,14 @@ Control control (
 	.OrigPC(OrigPC),
 	.ALUControl(ALUControl),
 	.MemWrite(MemWrite),
-	.OrigULA(OrigULA),
+	.OrigALU(OrigALU),
 	.RegWrite(RegWrite)	
 );
 
 ALU alu (
 	.iControl(ALUControl),
 	.iA(registerRead1),
-	.iB(registerRead2),
+	.iB(aluInputB),
 	.oResult(aluResult)
 );
 
@@ -130,10 +142,11 @@ assign dMemRead = MemRead;
 assign dOrigPC = OrigPC;
 assign dALUControl = ALUControl;
 assign dMemWrite = MemWrite;
-assign dOrigULA = OrigULA;
+assign dOrigALU = OrigALU;
 assign dRegWrite = RegWrite;
 
 assign dAluResult = aluResult;
+assign dImmediate = immediate;
 
 always @(posedge clock)
 begin

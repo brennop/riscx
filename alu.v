@@ -17,6 +17,7 @@ always @*
 		ALU_ADD: oResult <= iA + iB;
 		ALU_SUB:	oResult <= iA - iB;
 		ALU_SLT: oResult <= iA < iB;
+		default: oResult <= iA;
 	endcase
 
 

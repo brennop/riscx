@@ -20,8 +20,8 @@ begin
 	registers[7] = 32'd0;
 	registers[8] = 32'd0;
 	registers[9] = 32'd0;
-	registers[10] = 32'd4;
-	registers[11] = 32'd2;
+	registers[10] = 32'd0;
+	registers[11] = 32'd0;
 	registers[12] = 32'd0;
 	registers[13] = 32'd0;
 	registers[14] = 32'd0;

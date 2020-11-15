@@ -25,7 +25,8 @@ module TopDE (
 	output OrigULA,
 	output RegWrite,
 	
-	output [31:0] AluResult
+	output [31:0] AluResult,
+	output [31:0] Immediate
 );
 
 assign RS1 = Instruction[19:15];
@@ -46,10 +47,11 @@ Datapath dp (
 	.dOrigPC(OrigPC),
 	.dALUControl(ALUControl),
 	.dMemWrite(MemWrite),
-	.dOrigULA(OrigULA),
+	.dOrigALU(OrigULA),
 	.dRegWrite(RegWrite),
 	
-	.dAluResult(AluResult)
+	.dAluResult(AluResult),
+	.dImmediate(Immediate)
 );
 
 endmodule

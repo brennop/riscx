@@ -5,7 +5,7 @@
 
 module ImmediateGenerator (
 	input [31:0] iInstruction,
-	output [31:0] oImmediate
+	output logic [31:0] oImmediate
 );
 
 always @*

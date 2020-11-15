@@ -10,7 +10,7 @@ module Control (
 	output [1:0] OrigPC,
 	output [3:0] ALUControl,
 	output MemWrite,
-	output OrigULA,
+	output OrigALU,
 	output RegWrite
 );
 
@@ -27,7 +27,7 @@ always @*
 			OrigPC  <= PC4;
 			ALUControl <= ALU_ADD;
 			MemWrite <= FALSE;
-			OrigULA <= ORIG_IMM;
+			OrigALU <= ORIG_IMM;
 			RegWrite <= TRUE;
 		end
 		STORE:
@@ -37,7 +37,7 @@ always @*
 			OrigPC  <= PC4;
 			ALUControl <= ALU_ADD;
 			MemWrite <= TRUE;
-			OrigULA <= ORIG_IMM;
+			OrigALU <= ORIG_IMM;
 			RegWrite <= FALSE;
 		end
 		TIPOR:
@@ -45,8 +45,8 @@ always @*
 			OrigWriteData <= ORIG_ALU;
 			MemRead <= FALSE;
 			OrigPC  <= PC4;
-			MemWrite <= TRUE;
-			OrigULA <= ORIG_IMM;
+			MemWrite <= FALSE;
+			OrigALU <= ORIG_REG;
 			RegWrite <= TRUE;
 			
 			case(funct3)
@@ -57,6 +57,16 @@ always @*
 				default: 	ALUControl <= ALU_ADD;
 			endcase
 		end
+		TIPOI:
+		begin
+			OrigWriteData <= ORIG_ALU;
+			MemRead <= FALSE;
+			OrigPC  <= PC4;
+			MemWrite <= FALSE;
+			OrigALU <= ORIG_IMM;
+			RegWrite <= TRUE;
+			ALUControl <= ALU_ADD;
+		end
 		BRANCH:
 		begin
 			OrigWriteData <= ORIG_ANY;
@@ -64,7 +74,7 @@ always @*
 			OrigPC  <= PCBEQ;
 			ALUControl <= ALU_SUB;
 			MemWrite <= FALSE;
-			OrigULA <= DONT_CARE;
+			OrigALU <= DONT_CARE;
 			RegWrite <= FALSE;
 		end
 		JUMP:
@@ -74,7 +84,7 @@ always @*
 			OrigPC  <= PCIMM;
 			ALUControl <= ALU_ADD;
 			MemWrite <= FALSE;
-			OrigULA <= DONT_CARE;
+			OrigALU <= DONT_CARE;
 			RegWrite <= FALSE;
 		end
 		default:
@@ -84,7 +94,7 @@ always @*
 			OrigPC  <= ORIG_ANY;
 			ALUControl <= ALU_ADD;
 			MemWrite <= DONT_CARE;
-			OrigULA <= DONT_CARE;
+			OrigALU <= DONT_CARE;
 			RegWrite <= DONT_CARE;
 		end
 	endcase
