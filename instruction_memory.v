@@ -9,19 +9,25 @@ reg [31:0] MI[0:255];
 
 initial
 begin
-MI[0]=32'h00a00513;   // addi a0 zero 10
-MI[1]=32'h00100593;   // addi a1 zero 1
-MI[2]=32'h00400313;   // addi t1 zero 4
-MI[3]=32'h00a6a023;   // PROC: sw a0 0(a3)
-MI[4]=32'h006686b3;   // add a3 a3 t1
-MI[5]=32'h40b50533;   // sub a0 a0 a1
-MI[6]=32'h00052633;   // slt a2 a0 zero
-MI[7]=32'hfe0608e3;   // beq a2 zero PROC
-MI[8]=32'h0006f6b3;   // and a3 a3 zero
-MI[9]=32'h0066e6b3;  // or a3 a3 t1
-MI[10]=32'h00d686b3;  // add a3 a3 a3
-MI[11]=32'h0006a903;  // lw s2 0(a3)
-MI[12]=32'h000000ef;  // END: jal END             
+MI[0]=32'h10010437;   // 			lui s0, 0x10010 	# carregar o começo do .data em s0
+MI[1]=32'h00442483;   // 			lw s1, 4(s0) 		# s1 = 100
+MI[2]=32'h009484b3;   // 			add s1, s1, s1 	# s1 = 200
+MI[3]=32'h00842283;   // 			lw t0, 8(s0)		# t1 = 50
+MI[4]=32'h405484b3;   // 			sub s1, s1, t0 	# s1 = 150
+MI[5]=32'h0092f333;   // 			and t1, t0, s1 	# t1 = 18
+MI[6]=32'h006484b3;   // 			add s1, s1, t1 	# s1 = 168
+MI[7]=32'h0092e333;   // 			or t1, t0, s1		# t1 = 186
+MI[8]=32'h006484b3;   // 			add s1, s1, t1 	# s1 = 354
+MI[9]=32'h0092a333;   // 			slt t1, t0, s1 	# t1 = 1
+MI[10]=32'h006484b3;  // 			add s1, s1, t1		# s1 = 355
+MI[11]=32'h0054a333;  // 			slt t1, s1, t0		# t1 = 0
+MI[12]=32'h006484b3;  // 			add s1, s1, t1		# s1 = 355
+MI[13]=32'h00c42303;  // 			lw t1, 12(s0)		# t1 = 305
+MI[14]=32'h405484b3;  // Proc:	sub s1, s1, t0		# s1 = 305
+MI[15]=32'hfe648ee3;  // 			beq s1, t1, Proc	# s1 = 255
+MI[16]=32'h00942023;  // 			sw, s1, 0(s0)		# 0(s0) = 255
+MI[17]=32'h00042903;  // 			lw, s2, 0(s0)		# s2 = 255
+MI[18]=32'h000000ef;  // end:		jal end				# end          
 end
 
 

@@ -14,7 +14,11 @@ reg [8:0] i;
 
 initial
 	begin
-		for (i = 0; i <= 255; i = i + 1'b1)
+		MD[0] = 32'd0;
+		MD[1] = 32'd100;
+		MD[2] = 32'd50;
+		MD[3] = 32'd305;		
+		for (i = 4; i <= 255; i = i + 1'b1)
 			MD[i] = 32'd0;
 	end
 
@@ -23,9 +27,8 @@ begin
 	if(write && !read) MD[address] <= iData;
 end
 
-always @(negedge clock)
-begin
-	if(read && !write) oData <= MD[address];
-end
+
+assign oData = read ? MD[address] : 32'b0;
+
 
 endmodule
