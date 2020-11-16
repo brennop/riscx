@@ -74,8 +74,8 @@ always @*
 	case(OrigWriteData)
 		ORIG_MEM: dataToWrite <= readData;
 		ORIG_ALU: dataToWrite <= aluResult;
-		ORIG_PC4: dataToWrite <= pc + 32'd4;
-		default:  dataToWrite <= 32'b0;
+		ORIG_PC4: dataToWrite <= pc4;
+		ORIG_LUI: dataToWrite <= immediate;
 	endcase
 
 always @*

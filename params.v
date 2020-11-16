@@ -7,6 +7,7 @@ parameter
 	STORE 	= 7'b0100011,
 	TIPOR 	= 7'b0110011,
 	TIPOI		= 7'b0010011,
+	TIPOU		= 7'b0110111,
 	BRANCH	= 7'b1100011,
 	JUMP		= 7'b1101111,
 	
@@ -24,7 +25,7 @@ parameter
 	ORIG_MEM = 2'd0,
 	ORIG_ALU = 2'd1,
 	ORIG_PC4 = 2'd2,
-	ORIG_ANY = 2'bxx,
+	ORIG_LUI = 2'd3,
 	
 	FUNCT3_ADD			= 3'b000,
 	FUNCT3_SUB			= 3'b000,

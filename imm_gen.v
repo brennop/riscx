@@ -4,13 +4,15 @@
 `endif
 
 module ImmediateGenerator (
-	input [31:0] iInstruction,
-	output logic [31:0] oImmediate
+	input wire [31:0] iInstruction,
+	output wire [31:0] oImmediate
 );
 
 always @*
 	case (iInstruction[6:0])
-		LOAD, TIPOI:
+		TIPOU:
+			oImmediate <= {iInstruction[31:12], 12'b0};
+		LOAD:
 			oImmediate <= {{20{iInstruction[31]}}, iInstruction[31:20]};
 		STORE:
 			oImmediate <= {{20{iInstruction[31]}}, iInstruction[31:25], iInstruction[11:7]};

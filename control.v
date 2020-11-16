@@ -32,7 +32,7 @@ always @*
 		end
 		STORE:
 		begin
-			OrigWriteData <= ORIG_ANY;
+			OrigWriteData <= ORIG_ALU;
 			MemRead <= FALSE;
 			OrigPC  <= PC4;
 			ALUControl <= ALU_ADD;
@@ -67,9 +67,19 @@ always @*
 			RegWrite <= TRUE;
 			ALUControl <= ALU_ADD;
 		end
+		TIPOU:
+		begin
+			OrigWriteData <= ORIG_LUI;
+			MemRead <= FALSE;
+			OrigPC  <= PC4;
+			MemWrite <= FALSE;
+			OrigALU <= ORIG_IMM;
+			RegWrite <= TRUE;
+			ALUControl <= ALU_ADD;
+		end
 		BRANCH:
 		begin
-			OrigWriteData <= ORIG_ANY;
+			OrigWriteData <= ORIG_ALU;
 			MemRead <= FALSE;
 			OrigPC  <= PCBEQ;
 			ALUControl <= ALU_SUB;
@@ -89,9 +99,9 @@ always @*
 		end
 		default:
 		begin
-			OrigWriteData <= ORIG_ANY;
+			OrigWriteData <= ORIG_ALU;
 			MemRead <= DONT_CARE;
-			OrigPC  <= ORIG_ANY;
+			OrigPC  <= ORIG_ALU;
 			ALUControl <= ALU_ADD;
 			MemWrite <= DONT_CARE;
 			OrigALU <= DONT_CARE;
