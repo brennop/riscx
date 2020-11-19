@@ -1,12 +1,20 @@
 
-
+/*
+	Memória de Instruções
+	Recebe um endereço (PC) e lê
+	a instrução naquele endereço
+*/
 module InstructionMemory (
 	input [31:0] address, 
 	output [31:0] instruction
 );
 
+// A memória de instruções é implementada 
+// como um array de 256 registradores
 reg [31:0] MI[0:255];
 
+// Aqui fazemos a atribuição dos dados da 
+// memória, com o programa a ser executado 
 initial
 begin
 MI[0]=32'h10010437;   // 			lui s0, 0x10010 	# carregar o começo do .data em s0
@@ -30,7 +38,13 @@ MI[17]=32'h00042903;  // 			lw, s2, 0(s0)		# s2 = 255
 MI[18]=32'h000000ef;  // end:		jal end				# end          
 end
 
-
+// Precisamos deslocar o endereço para a esquerda 
+// (dividir por 2) já que nossa memória não é 
+// byte addressing assim como o PC 
 assign instruction = MI[address>>2];
+
+// Só precisamos da leitura já que 
+// nossa memória de instruções não
+// será escrita durante a execução
 
 endmodule

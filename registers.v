@@ -1,14 +1,26 @@
+
+/*
+	Banco de Registradores
+*/
+
 module Registers (
-	input wire clock, writeRegister,
-	input wire [4:0] rs1, rs2, rd,
-	input wire [31:0] dataToWrite,
+	input wire clock,  								// o clock, para escrita síncrona
+	input wire writeRegister,					// sinal de controle para habilitar a escrita 
+	input wire [4:0] rs1, rs2, rd,		// registradores de fonte e destino	
+	input wire [31:0] dataToWrite,		// dados a serem escritos no registrador de destino
 	
-	output wire [31:0] registerRead1, registerRead2,
-	output [31:0] watch
+	output wire [31:0] registerRead1, registerRead2, // o que foi lido dos registradores
+	output [31:0] watch								// debug para observar um registrador
 );
 
+
+// Nosso banco de registradores é definido como
+// um array de 32 registradores de 32 bits cada
 reg [31:0] registers[31:0];
 
+// Fazemos a inicialização da memória com todos
+// os registradores zerados, e o registrador r2
+// (sp) com o valor do topo da memória
 initial 
 begin
 	registers[0] = 32'd0;
@@ -45,12 +57,15 @@ begin
 	registers[31] = 32'd0;
 end
 
-assign registerRead1 = registers[rs1];
-assign registerRead2 = registers[rs2];
-assign watch = registers[18];
+assign registerRead1 = registers[rs1]; 	// Valor do registrador RS1
+assign registerRead2 = registers[rs2]; 	// Valor do registrador RS2
+assign watch = registers[18];						// Registrador a ser mostrado no wvf
 
+// Escrita síncrona
 always @(posedge clock) 
 begin
+	// Se o write estiver habilitado e não estiver no reg ZERO
+	// escrevemos o valor do dataToWrite no registrador RD
 	if(writeRegister && (rd != 5'b0)) registers[rd] <= dataToWrite;
 end
 
