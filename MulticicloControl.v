@@ -72,6 +72,7 @@ always @*
         TIPOR:        nextState <= STATE_TIPOR;
         BRANCH:       nextState <= STATE_BRANCH;
         JUMP:         nextState <= STATE_JUMP;
+		  TIPOU:        nextState <= STATE_LUI;
         default:      nextState <= STATE_FETCH;
       endcase
     end
@@ -219,6 +220,24 @@ always @*
       ALUOp                	  <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= TRUE; 
+      Branch                    <= FALSE; 
+
+      nextState                 <= STATE_FETCH;
+    end
+	STATE_LUI:
+    begin
+      MemoryAddressOrigin       <= ADDRESS_DONTCARE;
+      WriteMemory               <= FALSE;
+      ReadMemory                <= FALSE;
+      WriteInstructionRegister  <= FALSE;
+      RegisterInputOrigin       <= REGISTER_IMM;
+      WriteRegister             <= TRUE;
+      WriteCurrentPC            <= FALSE;
+      ALUInputAOrigin           <= INPUT_A_DONTCARE;
+      ALUInputBOrigin           <= INPUT_B_DONTCARE;
+      ALUOp                	  <= OP_ADD;
+      PCOrigin                  <= PC_ALU;
+      WritePC                   <= FALSE; 
       Branch                    <= FALSE; 
 
       nextState                 <= STATE_FETCH;

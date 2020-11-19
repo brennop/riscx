@@ -40,6 +40,7 @@ parameter
   STATE_TIPOR_SAVE  = 4'd7,
   STATE_BRANCH      = 4'd8,
   STATE_JUMP        = 4'd9,
+  STATE_LUI         = 4'd10,
   
   FUNCT3_ADD      = 3'b000,
   FUNCT3_SUB      = 3'b000,
@@ -69,8 +70,9 @@ parameter
   
   // Mux Register Input Data
   REGISTER_ALU      = 2'd0,
-  REGISTER_PC4       = 2'd1,
+  REGISTER_PC4      = 2'd1,
   REGISTER_MEMORY   = 2'd2,
+  REGISTER_IMM		  = 2'd3,
   REGISTER_DONTCARE = 2'd3,
   
   // Mux ALU Input A

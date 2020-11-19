@@ -43,6 +43,7 @@ wire [31:0] immediate;			// Imediato gerado
 wire [31:0] aluInputA;
 wire [31:0] aluInputB;
 wire [31:0] aluResult;
+wire zero;
 
 
 /*
@@ -91,21 +92,22 @@ wire 		  PCOrigin;							// Origem do dado a ser escrito em PC
  *		Multiplexadores
  */
 
-assign @*
+always @*
 	case(PCOrigin)
 		PC_ALU:		nextData <= aluResult;
 		PC_ALU_REG:	nextData <= ALURegister;
 	endcase
 
-assign @*
+always @*
 	case(RegisterInputOrigin)
 		REGISTER_ALU:		registerInputData <= ALURegister;
-		REGISTER_PC:		registerInputData	<= PC;
+		REGISTER_PC4:		registerInputData	<= PC;
 		REGISTER_MEMORY: 	registerInputData	<= DataRegister;
+		REGISTER_IMM:		registerInputData <= immediate;
 		default:				registerInputData <= 32'b0; // DONT-CARE
 	endcase
  
-assign @*
+always @*
 	case(ALUInputAOrigin)
 		INPUT_A_CURRENT_PC:	aluInputA <= CurrentPC;
 		INPUT_A_PC:				aluInputA <= PC;
@@ -113,7 +115,7 @@ assign @*
 		default:					aluInputA <= 32'b0; // DONT-CARE
 	endcase
  
-assign @*
+always @*
 	case(ALUInputBOrigin)
 		INPUT_B_REGISTER:		aluInputB <= RegisterReadB;
 		INPUT_B_4:				aluInputB <= 32'd4;
@@ -121,7 +123,7 @@ assign @*
 		default:					aluInputB <= 32'b0; // DONT-CARE
 	endcase
 
-assign @*
+always @*
 	case(MemoryAddressOrigin)
 		ADDRESS_PC:			address <= PC;
 		ADDRESS_ALU_REG:	address <= ALURegister;
@@ -131,9 +133,9 @@ assign @*
  *		Escrita nos Registradores
  */	
 
-assign @(posedge clock)
+always @(posedge clock)
 begin
-	if(WritePC || (Branch && Zero)) 	PC <= nextData;
+	if(WritePC || (Branch && zero)) 	PC <= nextData;
 	if(WriteCurrentPC) 					CurrentPC <= PC;
 	if(WriteInstructionRegister)		InstructionRegister <= instruction;
 end
@@ -204,6 +206,15 @@ ALU alu (
 	.iB(aluInputB),
 	.oResult(aluResult)
 );
+
+/*
+ * 	Debug
+ */
+
+always @*
+begin
+	dInstruction <= instruction;
+end
 
 
 endmodule
