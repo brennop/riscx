@@ -11,6 +11,9 @@ parameter
 	BRANCH	= 7'b1100011,
 	JUMP		= 7'b1101111,
 	
+	TEXT		= 32'h00400000,
+	DATA		= 32'h10010000,
+	
 	TRUE		= 1'b1,
 	FALSE		= 1'b0,
 	DONT_CARE	= 1'bx,
@@ -26,6 +29,17 @@ parameter
 	ORIG_ALU = 2'd1,
 	ORIG_PC4 = 2'd2,
 	ORIG_LUI = 2'd3,
+	
+	STATE_FETCH 	= 4'd0,
+	STATE_DECODE	= 4'd1,
+	STATE_LWSW		= 4'd2,
+	STATE_LOAD		= 4'd3,
+	STATE_LOADSAVE	= 4'd4,
+	STATE_STORE		= 4'd5,
+	STATE_TIPOR		= 4'd6,
+	STATE_TIPORSAVE = 4'd7,
+	STATE_BEQ		= 4'd8,
+	STATE_JAL		= 4'd9,
 	
 	FUNCT3_ADD			= 3'b000,
 	FUNCT3_SUB			= 3'b000,
