@@ -36,7 +36,7 @@ module TopDE (
 //assign Rd = Instruction[11:7];
 
 
-Datapath dp (
+Uniciclo uniciclo (
 	.clock(clock), 
 	.oInstruction(Instruction), 
 //	.oRegisterRead1(registerRead1), 
