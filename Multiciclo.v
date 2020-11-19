@@ -34,6 +34,7 @@ reg [31:0] ALURegister;
  *		Sinais/Fios do Datapath
  */
  
+wire [31:0]	nextData;			 
 wire [31:0] address;				// Endereço da memória
 wire [31:0] readData;			// Dado lido da memória
 wire [31:0] registerInputData;// Dado a ser escrito em rd
@@ -58,12 +59,12 @@ wire [4:0]	rd;
 
 always @*
 begin
-	opcode <= instruction[6:0];
-	funct3 <= instruction[14:12];
-	funct7 <= instruction[31:25];
-	rs1	 <= instruction[19:15];
-	rs2	 <= instruction[24:20];
-	rd     <= instruction[11:7];
+	opcode <= InstructionRegister[6:0];
+	funct3 <= InstructionRegister[14:12];
+	funct7 <= InstructionRegister[31:25];
+	rs1	 <= InstructionRegister[19:15];
+	rs2	 <= InstructionRegister[24:20];
+	rd     <= InstructionRegister[11:7];
 end
 
 /*
@@ -92,8 +93,8 @@ wire 		  PCOrigin;							// Origem do dado a ser escrito em PC
 
 assign @*
 	case(PCOrigin)
-		PC_ALU:		address <= PC;
-		PC_ALU_REG:	address <= ALURegister;
+		PC_ALU:		nextData <= aluResult;
+		PC_ALU_REG:	nextData <= ALURegister;
 	endcase
 
 assign @*
@@ -125,7 +126,18 @@ assign @*
 		ADDRESS_PC:			address <= PC;
 		ADDRESS_ALU_REG:	address <= ALURegister;
 	endcase
-	
+
+/*
+ *		Escrita nos Registradores
+ */	
+
+assign @(posedge clock)
+begin
+	if(WritePC || (Branch && Zero)) 	PC <= nextData;
+	if(WriteCurrentPC) 					CurrentPC <= PC;
+	if(WriteInstructionRegister)		InstructionRegister <= instruction;
+end
+
 /*
  * 	Estruturas / Módulos
  */
