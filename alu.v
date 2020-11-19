@@ -9,11 +9,15 @@
 */
 
 module ALU (
-	input 		 		[4:0]  iControl,
+	input 		 	[4:0]  iControl,
 	input signed 	[31:0] iA, 
 	input signed 	[31:0] iB,
-	output 		 		[31:0] oResult
+	output 		 	[31:0] oResult,
+	output			oZero
 );
+
+// TODO: Verificar otimização
+assign oZero = ~| oResult;
 
 // A ALU é um circuito combinacional
 always @*
@@ -23,7 +27,7 @@ always @*
 		ALU_AND: 	oResult <= iA & iB;
 		ALU_OR:		oResult <= iA | iB;
 		ALU_ADD: 	oResult <= iA + iB;
-		ALU_SUB:	oResult <= iA - iB;
+		ALU_SUB:		oResult <= iA - iB;
 		ALU_SLT: 	oResult <= iA < iB;
 		default: 	oResult <= iA;
 	endcase

@@ -56,6 +56,10 @@ parameter
   ALU_SUB   = 4'b0110,
   ALU_SLT   = 4'b0111,
   
+  OP_ADD	= 2'd0,
+  OP_SUB	= 2'd1,
+  OP_ANY = 2'd2,
+  
   // Multi Control
   
   // Mux Memory Address

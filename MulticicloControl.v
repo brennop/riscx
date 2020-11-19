@@ -10,8 +10,6 @@
 module MulticicloControl (
   input wire clock,
   input wire [0:6] opcode,
-  input wire [0:2] funct3,
-  input wire [0:6] funct7,
   
   output wire       MemoryAddressOrigin,
   output wire       WriteMemory,
@@ -22,7 +20,7 @@ module MulticicloControl (
   output wire       WriteCurrentPC,
   output wire [0:1] ALUInputAOrigin,
   output wire [0:1] ALUInputBOrigin,
-  output wire [0:3] ALUControl,
+  output wire [0:1] ALUOp,
   output wire       PCOrigin,
   output wire       WritePC,
   output wire       Branch
@@ -46,7 +44,7 @@ always @*
       WriteCurrentPC            <= TRUE;
       ALUInputAOrigin           <= INPUT_A_PC;
       ALUInputBOrigin           <= INPUT_B_4;
-      ALUControl                <= ALU_ADD;
+      ALUOp                	  <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= TRUE; 
       Branch                    <= FALSE; 
@@ -64,7 +62,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_CURRENT_PC;
       ALUInputBOrigin           <= INPUT_B_IMMEDIATE;
-      ALUControl                <= ALU_ADD;
+      ALUOp		                 <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
       Branch                    <= FALSE; 
@@ -88,7 +86,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_REGISTER;
       ALUInputBOrigin           <= INPUT_B_IMMEDIATE;
-      ALUControl                <= ALU_ADD;
+      ALUOp		                 <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
       Branch                    <= FALSE; 
@@ -110,7 +108,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_DONTCARE;
       ALUInputBOrigin           <= INPUT_B_DONTCARE;
-      ALUControl                <= ALU_ADD;
+      ALUOp                	  <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
       Branch                    <= FALSE; 
@@ -128,7 +126,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_DONTCARE;
       ALUInputBOrigin           <= INPUT_B_DONTCARE;
-      ALUControl                <= ALU_ADD;
+      ALUOp                	  <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
       Branch                    <= FALSE; 
@@ -146,7 +144,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_DONTCARE;
       ALUInputBOrigin           <= INPUT_B_DONTCARE;
-      ALUControl                <= ALU_ADD;
+      ALUOp               		  <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
       Branch                    <= FALSE; 
@@ -164,22 +162,10 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_REGISTER;
       ALUInputBOrigin           <= INPUT_B_REGISTER;
+		ALUOp							  <= OP_ANY;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
-      Branch                    <= FALSE; 
-
-			case(funct3)
-				FUNCT3_ADD: 
-          case(funct7)
-            FUNCT7_ADD: ALUControl <= ALU_ADD;
-            FUNCT7_SUB: ALUControl <= ALU_SUB;
-            default:    ALUControl <= ALU_ADD;
-          endcase
-				FUNCT3_SLT: ALUControl <= ALU_SLT;
-				FUNCT3_OR : ALUControl <= ALU_OR;
-				FUNCT3_AND: ALUControl <= ALU_AND;
-				default: 	ALUControl <= ALU_ADD;
-			endcase
+      Branch                    <= FALSE;
 
       nextState                 <= STATE_TIPOR_SAVE;
     end
@@ -194,7 +180,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_DONTCARE;
       ALUInputBOrigin           <= INPUT_B_DONTCARE;
-      ALUControl                <= ALU_ADD;
+      ALUOp                	  <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
       Branch                    <= FALSE; 
@@ -212,7 +198,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_REGISTER;
       ALUInputBOrigin           <= INPUT_B_REGISTER;
-      ALUControl                <= ALU_SUB;
+      ALUOp                	  <= OP_SUB;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
       Branch                    <= TRUE; 
@@ -230,7 +216,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_DONTCARE;
       ALUInputBOrigin           <= INPUT_B_DONTCARE;
-      ALUControl                <= ALU_ADD;
+      ALUOp                	  <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= TRUE; 
       Branch                    <= FALSE; 
@@ -248,7 +234,7 @@ always @*
       WriteCurrentPC            <= FALSE;
       ALUInputAOrigin           <= INPUT_A_DONTCARE;
       ALUInputBOrigin           <= INPUT_B_DONTCARE;
-      ALUControl                <= ALU_ADD;
+      ALUOp                	  <= OP_ADD;
       PCOrigin                  <= PC_ALU;
       WritePC                   <= FALSE; 
       Branch                    <= FALSE; 
