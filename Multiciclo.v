@@ -44,3 +44,5 @@ Memory memory(
 	.read(ReadMemory),
 	.oData(ReadData),
 );
+
+endmodule

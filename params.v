@@ -30,22 +30,25 @@ parameter
   ORIG_PC4 = 2'd2,
   ORIG_LUI = 2'd3,
   
-  STATE_FETCH     = 4'd0,
-  STATE_DECODE    = 4'd1,
-  STATE_LWSW      = 4'd2,
-  STATE_LOAD      = 4'd3,
-  STATE_LOADSAVE  = 4'd4,
-  STATE_STORE     = 4'd5,
-  STATE_TIPOR     = 4'd6,
-  STATE_TIPORSAVE = 4'd7,
-  STATE_BEQ       = 4'd8,
-  STATE_JAL       = 4'd9,
+  STATE_FETCH       = 4'd0,
+  STATE_DECODE      = 4'd1,
+  STATE_LOAD_STORE  = 4'd2,
+  STATE_LOAD        = 4'd3,
+  STATE_LOAD_SAVE   = 4'd4,
+  STATE_STORE       = 4'd5,
+  STATE_TIPOR       = 4'd6,
+  STATE_TIPOR_SAVE  = 4'd7,
+  STATE_BRANCH      = 4'd8,
+  STATE_JUMP        = 4'd9,
   
   FUNCT3_ADD      = 3'b000,
   FUNCT3_SUB      = 3'b000,
   FUNCT3_SLT      = 3'b010,
   FUNCT3_OR       = 3'b110,
   FUNCT3_AND      = 3'b111,
+
+  FUNCT7_ADD      = 7'b0000000,
+  FUNCT7_SUB      = 7'b0000000,
   
   ALU_AND   = 4'b0000,
   ALU_OR    = 4'b0001,
@@ -56,12 +59,13 @@ parameter
   // Multi Control
   
   // Mux Memory Address
-  ADDRESS_PC    = 1'b0,
-  ADDRESS_DATA  = 1'b1,
+  ADDRESS_PC        = 1'b0,
+  ADDRESS_ALU_REG   = 1'b1,
+  ADDRESS_DONTCARE  = 1'bx,
   
   // Mux Register Input Data
   REGISTER_ALU      = 2'd0,
-  REGISTER_PC       = 2'd1,
+  REGISTER_PC4       = 2'd1,
   REGISTER_MEMORY   = 2'd2,
   REGISTER_DONTCARE = 2'd3,
   

@@ -11,7 +11,7 @@ module Memory (
 	input [31:0] iAddress, 
 	input [31:0] iData, 
 	input wire write, read,
-	output [31:0] oData,
+	output [31:0] oData
 );
  
 // A memória é implementada como um array de 512 posições

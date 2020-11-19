@@ -1,0 +1,1354 @@
+/*<simulation_settings>
+<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off CPU -c cpu --vector_source="D:/Quartus/projects/cpu/MulticicloControl.vwf" --testbench_file="D:/Quartus/projects/cpu/simulation/qsim/MulticicloControl.vwf.vt"</ftestbench_cmd>
+<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=verilog --write_settings_files=off CPU -c cpu --vector_source="D:/Quartus/projects/cpu/MulticicloControl.vwf" --testbench_file="D:/Quartus/projects/cpu/simulation/qsim/MulticicloControl.vwf.vt"</ttestbench_cmd>
+<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=verilog --output_directory="D:/Quartus/projects/cpu/simulation/qsim/" CPU -c cpu</fnetlist_cmd>
+<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=verilog --output_directory="D:/Quartus/projects/cpu/simulation/qsim/" CPU -c cpu</tnetlist_cmd>
+<modelsim_script>onerror {exit -code 1}
+vlib work
+vlog -work work cpu.vo
+vlog -work work MulticicloControl.vwf.vt
+vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.MulticicloControl_vlg_vec_tst
+vcd file -direction CPU.msim.vcd
+vcd add -internal MulticicloControl_vlg_vec_tst/*
+vcd add -internal MulticicloControl_vlg_vec_tst/i1/*
+proc simTimestamp {} {
+    echo "Simulation time: $::now ps"
+    if { [string equal running [runStatus]] } {
+        after 2500 simTimestamp
+    }
+}
+after 2500 simTimestamp
+run -all
+quit -f
+</modelsim_script>
+<modelsim_script_timing>onerror {exit -code 1}
+vlib work
+vlog -work work cpu.vo
+vlog -work work MulticicloControl.vwf.vt
+vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.MulticicloControl_vlg_vec_tst
+vcd file -direction CPU.msim.vcd
+vcd add -internal MulticicloControl_vlg_vec_tst/*
+vcd add -internal MulticicloControl_vlg_vec_tst/i1/*
+proc simTimestamp {} {
+    echo "Simulation time: $::now ps"
+    if { [string equal running [runStatus]] } {
+        after 2500 simTimestamp
+    }
+}
+after 2500 simTimestamp
+run -all
+quit -f
+</modelsim_script_timing>
+<hdl_lang>verilog</hdl_lang>
+</simulation_settings>*/
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+
+/*
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+*/
+
+HEADER
+{
+	VERSION = 1;
+	TIME_UNIT = ns;
+	DATA_OFFSET = 0.0;
+	DATA_DURATION = 1000.0;
+	SIMULATION_TIME = 0.0;
+	GRID_PHASE = 0.0;
+	GRID_PERIOD = 10.0;
+	GRID_DUTY_CYCLE = 50;
+}
+
+SIGNAL("ALUControl")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 4;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("ALUControl[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ALUControl";
+}
+
+SIGNAL("ALUControl[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ALUControl";
+}
+
+SIGNAL("ALUControl[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ALUControl";
+}
+
+SIGNAL("ALUControl[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ALUControl";
+}
+
+SIGNAL("ALUInputAOrigin")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 2;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("ALUInputAOrigin[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ALUInputAOrigin";
+}
+
+SIGNAL("ALUInputAOrigin[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ALUInputAOrigin";
+}
+
+SIGNAL("ALUInputBOrigin")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 2;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("ALUInputBOrigin[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ALUInputBOrigin";
+}
+
+SIGNAL("ALUInputBOrigin[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "ALUInputBOrigin";
+}
+
+SIGNAL("Branch")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("MemoryAddressOrigin")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("PCOrigin")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("ReadMemory")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("RegisterInputOrigin")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 2;
+	LSB_INDEX = 0;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("RegisterInputOrigin[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "RegisterInputOrigin";
+}
+
+SIGNAL("RegisterInputOrigin[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "RegisterInputOrigin";
+}
+
+SIGNAL("WriteCurrentPC")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("WriteInstructionRegister")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("WriteMemory")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("WritePC")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("WriteRegister")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("clock")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("funct3")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 3;
+	LSB_INDEX = 0;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("funct3[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct3";
+}
+
+SIGNAL("funct3[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct3";
+}
+
+SIGNAL("funct3[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct3";
+}
+
+SIGNAL("funct7")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 7;
+	LSB_INDEX = 0;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("funct7[6]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct7";
+}
+
+SIGNAL("funct7[5]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct7";
+}
+
+SIGNAL("funct7[4]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct7";
+}
+
+SIGNAL("funct7[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct7";
+}
+
+SIGNAL("funct7[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct7";
+}
+
+SIGNAL("funct7[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct7";
+}
+
+SIGNAL("funct7[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "funct7";
+}
+
+SIGNAL("opcode")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 7;
+	LSB_INDEX = 0;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("opcode[6]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "opcode";
+}
+
+SIGNAL("opcode[5]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "opcode";
+}
+
+SIGNAL("opcode[4]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "opcode";
+}
+
+SIGNAL("opcode[3]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "opcode";
+}
+
+SIGNAL("opcode[2]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "opcode";
+}
+
+SIGNAL("opcode[1]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "opcode";
+}
+
+SIGNAL("opcode[0]")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "opcode";
+}
+
+TRANSITION_LIST("ALUControl[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ALUControl[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ALUControl[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ALUControl[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ALUInputAOrigin[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ALUInputAOrigin[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ALUInputBOrigin[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ALUInputBOrigin[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("Branch")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("MemoryAddressOrigin")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("PCOrigin")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("ReadMemory")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("RegisterInputOrigin[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("RegisterInputOrigin[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("WriteCurrentPC")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("WriteInstructionRegister")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("WriteMemory")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("WritePC")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("WriteRegister")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("clock")
+{
+	NODE
+	{
+		REPEAT = 1;
+		NODE
+		{
+			REPEAT = 100;
+			LEVEL 0 FOR 5.0;
+			LEVEL 1 FOR 5.0;
+		}
+	}
+}
+
+TRANSITION_LIST("funct3[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct3[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct3[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct7[6]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct7[5]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct7[4]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct7[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct7[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct7[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("funct7[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("opcode[6]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 200.0;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 50.0;
+		NODE
+		{
+			REPEAT = 7;
+			LEVEL 0 FOR 50.0;
+			LEVEL 1 FOR 50.0;
+		}
+	}
+}
+
+TRANSITION_LIST("opcode[5]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 200.0;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 50.0;
+		NODE
+		{
+			REPEAT = 7;
+			LEVEL 0 FOR 50.0;
+			LEVEL 1 FOR 50.0;
+		}
+	}
+}
+
+TRANSITION_LIST("opcode[4]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 160.0;
+		LEVEL 1 FOR 40.0;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 50.0;
+		NODE
+		{
+			REPEAT = 7;
+			LEVEL 0 FOR 50.0;
+			LEVEL 1 FOR 50.0;
+		}
+	}
+}
+
+TRANSITION_LIST("opcode[3]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 160.0;
+		LEVEL 1 FOR 40.0;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 50.0;
+		NODE
+		{
+			REPEAT = 7;
+			LEVEL 0 FOR 50.0;
+			LEVEL 1 FOR 50.0;
+		}
+	}
+}
+
+TRANSITION_LIST("opcode[2]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 90.0;
+		LEVEL 1 FOR 40.0;
+		LEVEL 0 FOR 60.0;
+		LEVEL 1 FOR 10.0;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 50.0;
+		NODE
+		{
+			REPEAT = 7;
+			LEVEL 0 FOR 50.0;
+			LEVEL 1 FOR 50.0;
+		}
+	}
+}
+
+TRANSITION_LIST("opcode[1]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 150.0;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 50.0;
+		NODE
+		{
+			REPEAT = 7;
+			LEVEL 0 FOR 50.0;
+			LEVEL 1 FOR 50.0;
+		}
+	}
+}
+
+TRANSITION_LIST("opcode[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 130.0;
+		LEVEL 1 FOR 70.0;
+		LEVEL 0 FOR 50.0;
+		LEVEL 1 FOR 50.0;
+		NODE
+		{
+			REPEAT = 7;
+			LEVEL 0 FOR 50.0;
+			LEVEL 1 FOR 50.0;
+		}
+	}
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "clock";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 0;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct3";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 1;
+	TREE_LEVEL = 0;
+	CHILDREN = 2, 3, 4;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct3[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 2;
+	TREE_LEVEL = 1;
+	PARENT = 1;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct3[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 3;
+	TREE_LEVEL = 1;
+	PARENT = 1;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct3[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 4;
+	TREE_LEVEL = 1;
+	PARENT = 1;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct7";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 5;
+	TREE_LEVEL = 0;
+	CHILDREN = 6, 7, 8, 9, 10, 11, 12;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct7[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 6;
+	TREE_LEVEL = 1;
+	PARENT = 5;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct7[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 7;
+	TREE_LEVEL = 1;
+	PARENT = 5;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct7[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 8;
+	TREE_LEVEL = 1;
+	PARENT = 5;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct7[3]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 9;
+	TREE_LEVEL = 1;
+	PARENT = 5;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct7[4]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 10;
+	TREE_LEVEL = 1;
+	PARENT = 5;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct7[5]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 11;
+	TREE_LEVEL = 1;
+	PARENT = 5;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "funct7[6]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 12;
+	TREE_LEVEL = 1;
+	PARENT = 5;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "opcode";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 13;
+	TREE_LEVEL = 0;
+	CHILDREN = 14, 15, 16, 17, 18, 19, 20;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "opcode[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 14;
+	TREE_LEVEL = 1;
+	PARENT = 13;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "opcode[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 15;
+	TREE_LEVEL = 1;
+	PARENT = 13;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "opcode[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 16;
+	TREE_LEVEL = 1;
+	PARENT = 13;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "opcode[3]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 17;
+	TREE_LEVEL = 1;
+	PARENT = 13;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "opcode[4]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 18;
+	TREE_LEVEL = 1;
+	PARENT = 13;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "opcode[5]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 19;
+	TREE_LEVEL = 1;
+	PARENT = 13;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "opcode[6]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 20;
+	TREE_LEVEL = 1;
+	PARENT = 13;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUControl";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 21;
+	TREE_LEVEL = 0;
+	CHILDREN = 22, 23, 24, 25;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUControl[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 22;
+	TREE_LEVEL = 1;
+	PARENT = 21;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUControl[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 23;
+	TREE_LEVEL = 1;
+	PARENT = 21;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUControl[2]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 24;
+	TREE_LEVEL = 1;
+	PARENT = 21;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUControl[3]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 25;
+	TREE_LEVEL = 1;
+	PARENT = 21;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUInputAOrigin";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 26;
+	TREE_LEVEL = 0;
+	CHILDREN = 27, 28;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUInputAOrigin[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 27;
+	TREE_LEVEL = 1;
+	PARENT = 26;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUInputAOrigin[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 28;
+	TREE_LEVEL = 1;
+	PARENT = 26;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUInputBOrigin";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 29;
+	TREE_LEVEL = 0;
+	CHILDREN = 30, 31;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUInputBOrigin[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 30;
+	TREE_LEVEL = 1;
+	PARENT = 29;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ALUInputBOrigin[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 31;
+	TREE_LEVEL = 1;
+	PARENT = 29;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "Branch";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 32;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "MemoryAddressOrigin";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 33;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "PCOrigin";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 34;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "ReadMemory";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 35;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "RegisterInputOrigin";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 36;
+	TREE_LEVEL = 0;
+	CHILDREN = 37, 38;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "RegisterInputOrigin[0]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 37;
+	TREE_LEVEL = 1;
+	PARENT = 36;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "RegisterInputOrigin[1]";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 38;
+	TREE_LEVEL = 1;
+	PARENT = 36;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "WriteCurrentPC";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 39;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "WriteInstructionRegister";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 40;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "WriteMemory";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 41;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "WritePC";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 42;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "WriteRegister";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 43;
+	TREE_LEVEL = 0;
+}
+
+TIME_BAR
+{
+	TIME = 0;
+	MASTER = TRUE;
+}
+;
