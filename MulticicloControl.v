@@ -23,13 +23,22 @@ module MulticicloControl (
   output wire [0:1] ALUOp,
   output wire       PCOrigin,
   output wire       WritePC,
-  output wire       Branch
+  output wire       Branch,
+  
+  output [3:0] oState,
+  output [3:0] oNextState
 );
 
 reg   [0:3] state;       // o estado atual
 wire   [0:3] nextState;     // o próximo estado
 
-always @(posedge clock) state <= nextState;
+always @(posedge clock)
+begin
+	state <= nextState;
+end
+
+assign oState = state;
+assign oNextState = nextState;
 
 always @*
  case(state)

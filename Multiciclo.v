@@ -11,7 +11,12 @@ module Multiciclo (
 	input clock,
 	
 	output [31:0] dInstruction,
-	output [31:0] dRegister
+	output [31:0] dRegister,
+	
+	output [31:0] dAddress,
+	output [31:0] dReadData,
+	output [3:0]  dState,
+	output [3:0] 	dNextState
 );
 
 /*
@@ -40,6 +45,9 @@ wire [31:0] readData;			// Dado lido da memória
 wire [31:0] registerInputData;// Dado a ser escrito em rd
 wire [31:0] immediate;			// Imediato gerado 
 
+wire [31:0] registerReadA;
+wire [31:0] registerReadB;
+
 wire [31:0] aluInputA;
 wire [31:0] aluInputB;
 wire [31:0] aluResult;
@@ -50,7 +58,6 @@ wire zero;
  *		Instrução
  */
  
-wire [31:0] instruction;
 wire [6:0]	opcode;
 wire [2:0]	funct3;
 wire [7:0]	funct7;
@@ -137,7 +144,12 @@ always @(posedge clock)
 begin
 	if(WritePC || (Branch && zero)) 	PC <= nextData;
 	if(WriteCurrentPC) 					CurrentPC <= PC;
-	if(WriteInstructionRegister)		InstructionRegister <= instruction;
+	if(WriteInstructionRegister)		InstructionRegister <= readData;
+	
+	DataRegister <= readData;
+	ALURegister <= aluResult;
+	RegisterReadA <= registerReadA;
+	RegisterReadB <= registerReadB;
 end
 
 /*
@@ -152,11 +164,15 @@ Memory memory(
 	.iData(registerReadB), 
 	.write(WriteMemory),
 	.read(ReadMemory),
-	.oData(ReadData)
+	.oData(readData),
+	.oAddress(dAddress)
 );
 
 // Controle do Multiciclo (Máquina de Estados)
 MulticicloControl control (
+	.clock(clock),
+	.opcode(opcode),
+	
 	.MemoryAddressOrigin(MemoryAddressOrigin),
 	.WriteMemory(WriteMemory),
 	.ReadMemory(ReadMemory),
@@ -169,7 +185,11 @@ MulticicloControl control (
 	.ALUOp(ALUOp),
 	.PCOrigin(PCOrigin),
 	.WritePC(WritePC),
-	.Branch(Branch)
+	.Branch(Branch),
+	
+	
+	.oState(dState),
+	.oNextState(dNextState)
 );
 
 // Controle da ALU
@@ -187,15 +207,15 @@ Registers registers (
 	.rs1(rs1), 
 	.rs2(rs2), 
 	.rd(rd), 
-	.registerRead1(RegisterReadA), 
-	.registerRead2(RegisterReadB),
+	.registerRead1(registerReadA), 
+	.registerRead2(registerReadB),
 	.dataToWrite(registerInputData),
 	.watch(dRegister)
 );
 
 // Gerador de Imediatos
 ImmediateGenerator immGen (
-	.iInstruction(instruction),
+	.iInstruction(InstructionRegister),
 	.oImmediate(immediate)
 );
 
@@ -213,7 +233,8 @@ ALU alu (
 
 always @*
 begin
-	dInstruction <= instruction;
+	dInstruction <= InstructionRegister;
+	dReadData <= readData;
 end
 
 
