@@ -14,9 +14,13 @@ module Multiciclo (
 	output [31:0] dRegister,
 	
 	output [31:0] dAddress,
+	output [31:0] dAddressMapped,
 	output [31:0] dReadData,
+	
 	output [3:0]  dState,
-	output [3:0] 	dNextState
+	output [31:0] dAluResult,
+	
+	output [31:0] dImmediate
 );
 
 /*
@@ -87,7 +91,7 @@ wire WritePC;							// Sinal de habilitação de escrita no PC
 
 wire 		  Branch;							// Sinal de controle indicando um branch (WritePCCond)
 wire [0:1] ALUOp;								// Sinal de controle para o controlador da ALU
-wire 		  ALUControl;						// Sinal de controle para a ALU
+wire [3:0] ALUControlSignal;				// Sinal de controle para a ALU
 
 wire 		  MemoryAddressOrigin;			// Origem do Endereço da memória
 wire [0:1] RegisterInputOrigin;			// Origem do dado a ser escrito em rd
@@ -165,7 +169,7 @@ Memory memory(
 	.write(WriteMemory),
 	.read(ReadMemory),
 	.oData(readData),
-	.oAddress(dAddress)
+	.oAddress(dAddressMapped)
 );
 
 // Controle do Multiciclo (Máquina de Estados)
@@ -197,7 +201,7 @@ ALUControl aluControl (
 	.iALUOp(ALUOp),
 	.funct3(funct3),
 	.funct7(funct7),
-	.oALUControl(ALUControl)
+	.oALUControl(ALUControlSignal)
 );
 
 // Banco de Registradores
@@ -221,10 +225,11 @@ ImmediateGenerator immGen (
 
 // ALU (ULA)
 ALU alu (
-	.iControl(ALUControl),
+	.iControl(ALUControlSignal),
 	.iA(aluInputA),
 	.iB(aluInputB),
-	.oResult(aluResult)
+	.oResult(aluResult),
+	.oZero(zero)
 );
 
 /*
@@ -235,6 +240,11 @@ always @*
 begin
 	dInstruction <= InstructionRegister;
 	dReadData <= readData;
+	
+	dAddress <= address;
+	
+	dAluResult <= aluResult;
+	dImmediate <= immediate;
 end
 
 

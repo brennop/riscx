@@ -13,7 +13,7 @@ module ALUControl (
   input wire iALUOp,
   input wire [2:0] funct3,
   input wire [6:0] funct7,
-  output oALUControl
+  output [3:0] oALUControl
 );
 
 always @*

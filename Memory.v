@@ -49,14 +49,19 @@ end
 
 wire [31:0] address;
 
-assign address = ((iAddress < DATA) ? (iAddress - TEXT) : (iAddress - DATA)) >> 2;
+assign address = ((iAddress < DATA) ? (iAddress - TEXT) : (iAddress - DATA + 1024)) >> 2;
 
 always @(posedge clock)
 begin
 	if(write) 	memory[address] <= iData;
 end
 
-assign oData = read ? memory[address] : 32'b0;
+always @(negedge clock)
+begin
+	if(read) oData <= memory[address];
+end
+
+//assign oData = read ? memory[address] : 32'b0;
 assign oAddress = address;
 
 endmodule

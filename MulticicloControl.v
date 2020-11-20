@@ -227,7 +227,7 @@ always @*
       ALUInputAOrigin           <= INPUT_A_DONTCARE;
       ALUInputBOrigin           <= INPUT_B_DONTCARE;
       ALUOp                	  <= OP_ADD;
-      PCOrigin                  <= PC_ALU;
+      PCOrigin                  <= PC_ALU_REG;
       WritePC                   <= TRUE; 
       Branch                    <= FALSE; 
 

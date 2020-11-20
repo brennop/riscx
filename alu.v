@@ -9,7 +9,7 @@
 */
 
 module ALU (
-	input 		 	[4:0]  iControl,
+	input 		 	[3:0]  iControl,
 	input signed 	[31:0] iA, 
 	input signed 	[31:0] iB,
 	output 		 	[31:0] oResult,
