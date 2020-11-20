@@ -10,7 +10,9 @@ module Registers (
 	input wire [31:0] dataToWrite,		// dados a serem escritos no registrador de destino
 	
 	output wire [31:0] registerRead1, registerRead2, // o que foi lido dos registradores
-	output [31:0] watch								// debug para observar um registrador
+	
+	input  [4:0] watchRegister,
+	output [31:0] watchRegisterValue								// debug para observar um registrador
 );
 
 
@@ -59,7 +61,7 @@ end
 
 assign registerRead1 = registers[rs1]; 	// Valor do registrador RS1
 assign registerRead2 = registers[rs2]; 	// Valor do registrador RS2
-assign watch = registers[18];						// Registrador a ser mostrado no wvf
+assign watchRegisterValue = registers[watchRegister];						// Registrador a ser mostrado no wvf
 
 // Escrita síncrona
 always @(posedge clock) 

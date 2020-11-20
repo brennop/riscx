@@ -23,6 +23,7 @@ quit -f
 
 
 
+
 </modelsim_script>
 <modelsim_script_timing>onerror {exit -code 1}
 vlib work
@@ -41,6 +42,7 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
+
 
 
 
@@ -2451,334 +2453,284 @@ SIGNAL("dAddressMapped[0]")
 	PARENT = "dAddressMapped";
 }
 
-SIGNAL("dAluRegister")
+SIGNAL("dAluControl")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = BUS;
-	WIDTH = 32;
+	WIDTH = 4;
 	LSB_INDEX = 0;
 	DIRECTION = OUTPUT;
 	PARENT = "";
 }
 
-SIGNAL("dAluRegister[31]")
+SIGNAL("dAluControl[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "dAluControl";
 }
 
-SIGNAL("dAluRegister[30]")
+SIGNAL("dAluControl[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "dAluControl";
 }
 
-SIGNAL("dAluRegister[29]")
+SIGNAL("dAluControl[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "dAluControl";
 }
 
-SIGNAL("dAluRegister[28]")
+SIGNAL("dAluControl[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "dAluControl";
 }
 
-SIGNAL("dAluRegister[27]")
+SIGNAL("f3")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 3;
+	LSB_INDEX = 0;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "";
 }
 
-SIGNAL("dAluRegister[26]")
+SIGNAL("f3[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f3";
 }
 
-SIGNAL("dAluRegister[25]")
+SIGNAL("f3[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f3";
 }
 
-SIGNAL("dAluRegister[24]")
+SIGNAL("f3[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f3";
 }
 
-SIGNAL("dAluRegister[23]")
+SIGNAL("f7")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 7;
+	LSB_INDEX = 0;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "";
 }
 
-SIGNAL("dAluRegister[22]")
+SIGNAL("f7[6]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f7";
 }
 
-SIGNAL("dAluRegister[21]")
+SIGNAL("f7[5]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f7";
 }
 
-SIGNAL("dAluRegister[20]")
+SIGNAL("f7[4]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f7";
 }
 
-SIGNAL("dAluRegister[19]")
+SIGNAL("f7[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f7";
 }
 
-SIGNAL("dAluRegister[18]")
+SIGNAL("f7[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f7";
 }
 
-SIGNAL("dAluRegister[17]")
+SIGNAL("f7[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f7";
 }
 
-SIGNAL("dAluRegister[16]")
+SIGNAL("f7[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "f7";
 }
 
-SIGNAL("dAluRegister[15]")
+SIGNAL("dAluOp")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
+	SIGNAL_TYPE = BUS;
+	WIDTH = 4;
+	LSB_INDEX = 0;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "";
 }
 
-SIGNAL("dAluRegister[14]")
+SIGNAL("dAluOp[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "dAluOp";
 }
 
-SIGNAL("dAluRegister[13]")
+SIGNAL("dAluOp[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "dAluOp";
 }
 
-SIGNAL("dAluRegister[12]")
+SIGNAL("dAluOp[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "dAluOp";
 }
 
-SIGNAL("dAluRegister[11]")
+SIGNAL("dAluOp[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	PARENT = "dAluOp";
 }
 
-SIGNAL("dAluRegister[10]")
+SIGNAL("dRegisterToWatch")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	SIGNAL_TYPE = BUS;
+	WIDTH = 5;
+	LSB_INDEX = 0;
+	DIRECTION = INPUT;
+	PARENT = "";
 }
 
-SIGNAL("dAluRegister[9]")
+SIGNAL("dRegisterToWatch[4]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	DIRECTION = INPUT;
+	PARENT = "dRegisterToWatch";
 }
 
-SIGNAL("dAluRegister[8]")
+SIGNAL("dRegisterToWatch[3]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	DIRECTION = INPUT;
+	PARENT = "dRegisterToWatch";
 }
 
-SIGNAL("dAluRegister[7]")
+SIGNAL("dRegisterToWatch[2]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	DIRECTION = INPUT;
+	PARENT = "dRegisterToWatch";
 }
 
-SIGNAL("dAluRegister[6]")
+SIGNAL("dRegisterToWatch[1]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	DIRECTION = INPUT;
+	PARENT = "dRegisterToWatch";
 }
 
-SIGNAL("dAluRegister[5]")
+SIGNAL("dRegisterToWatch[0]")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
-}
-
-SIGNAL("dAluRegister[4]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
-}
-
-SIGNAL("dAluRegister[3]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
-}
-
-SIGNAL("dAluRegister[2]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
-}
-
-SIGNAL("dAluRegister[1]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
-}
-
-SIGNAL("dAluRegister[0]")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
-	PARENT = "dAluRegister";
+	DIRECTION = INPUT;
+	PARENT = "dRegisterToWatch";
 }
 
 TRANSITION_LIST("clock")
@@ -4849,7 +4801,7 @@ TRANSITION_LIST("dAddressMapped[0]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[31]")
+TRANSITION_LIST("dAluControl[3]")
 {
 	NODE
 	{
@@ -4858,7 +4810,7 @@ TRANSITION_LIST("dAluRegister[31]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[30]")
+TRANSITION_LIST("dAluControl[2]")
 {
 	NODE
 	{
@@ -4867,7 +4819,7 @@ TRANSITION_LIST("dAluRegister[30]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[29]")
+TRANSITION_LIST("dAluControl[1]")
 {
 	NODE
 	{
@@ -4876,7 +4828,7 @@ TRANSITION_LIST("dAluRegister[29]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[28]")
+TRANSITION_LIST("dAluControl[0]")
 {
 	NODE
 	{
@@ -4885,7 +4837,7 @@ TRANSITION_LIST("dAluRegister[28]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[27]")
+TRANSITION_LIST("f3[2]")
 {
 	NODE
 	{
@@ -4894,7 +4846,7 @@ TRANSITION_LIST("dAluRegister[27]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[26]")
+TRANSITION_LIST("f3[1]")
 {
 	NODE
 	{
@@ -4903,7 +4855,7 @@ TRANSITION_LIST("dAluRegister[26]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[25]")
+TRANSITION_LIST("f3[0]")
 {
 	NODE
 	{
@@ -4912,7 +4864,7 @@ TRANSITION_LIST("dAluRegister[25]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[24]")
+TRANSITION_LIST("f7[6]")
 {
 	NODE
 	{
@@ -4921,7 +4873,7 @@ TRANSITION_LIST("dAluRegister[24]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[23]")
+TRANSITION_LIST("f7[5]")
 {
 	NODE
 	{
@@ -4930,7 +4882,7 @@ TRANSITION_LIST("dAluRegister[23]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[22]")
+TRANSITION_LIST("f7[4]")
 {
 	NODE
 	{
@@ -4939,7 +4891,7 @@ TRANSITION_LIST("dAluRegister[22]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[21]")
+TRANSITION_LIST("f7[3]")
 {
 	NODE
 	{
@@ -4948,7 +4900,7 @@ TRANSITION_LIST("dAluRegister[21]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[20]")
+TRANSITION_LIST("f7[2]")
 {
 	NODE
 	{
@@ -4957,7 +4909,7 @@ TRANSITION_LIST("dAluRegister[20]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[19]")
+TRANSITION_LIST("f7[1]")
 {
 	NODE
 	{
@@ -4966,7 +4918,7 @@ TRANSITION_LIST("dAluRegister[19]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[18]")
+TRANSITION_LIST("f7[0]")
 {
 	NODE
 	{
@@ -4975,7 +4927,7 @@ TRANSITION_LIST("dAluRegister[18]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[17]")
+TRANSITION_LIST("dAluOp[3]")
 {
 	NODE
 	{
@@ -4984,7 +4936,7 @@ TRANSITION_LIST("dAluRegister[17]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[16]")
+TRANSITION_LIST("dAluOp[2]")
 {
 	NODE
 	{
@@ -4993,7 +4945,7 @@ TRANSITION_LIST("dAluRegister[16]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[15]")
+TRANSITION_LIST("dAluOp[1]")
 {
 	NODE
 	{
@@ -5002,7 +4954,7 @@ TRANSITION_LIST("dAluRegister[15]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[14]")
+TRANSITION_LIST("dAluOp[0]")
 {
 	NODE
 	{
@@ -5011,129 +4963,48 @@ TRANSITION_LIST("dAluRegister[14]")
 	}
 }
 
-TRANSITION_LIST("dAluRegister[13]")
+TRANSITION_LIST("dRegisterToWatch[4]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 2000.0;
+		LEVEL 1 FOR 2000.0;
 	}
 }
 
-TRANSITION_LIST("dAluRegister[12]")
+TRANSITION_LIST("dRegisterToWatch[3]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 2000.0;
+		LEVEL 0 FOR 2000.0;
 	}
 }
 
-TRANSITION_LIST("dAluRegister[11]")
+TRANSITION_LIST("dRegisterToWatch[2]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 2000.0;
+		LEVEL 0 FOR 2000.0;
 	}
 }
 
-TRANSITION_LIST("dAluRegister[10]")
+TRANSITION_LIST("dRegisterToWatch[1]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 2000.0;
+		LEVEL 1 FOR 2000.0;
 	}
 }
 
-TRANSITION_LIST("dAluRegister[9]")
+TRANSITION_LIST("dRegisterToWatch[0]")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[8]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[7]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[6]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[5]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[4]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[3]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[2]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[1]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
-	}
-}
-
-TRANSITION_LIST("dAluRegister[0]")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 2000.0;
+		LEVEL 0 FOR 2000.0;
 	}
 }
 
@@ -7508,19 +7379,19 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister";
+	CHANNEL = "dAluControl";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 237;
 	TREE_LEVEL = 0;
-	CHILDREN = 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269;
+	CHILDREN = 238, 239, 240, 241;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[31]";
+	CHANNEL = "dAluControl[3]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 238;
 	TREE_LEVEL = 1;
 	PARENT = 237;
@@ -7528,9 +7399,9 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[30]";
+	CHANNEL = "dAluControl[2]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 239;
 	TREE_LEVEL = 1;
 	PARENT = 237;
@@ -7538,9 +7409,9 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[29]";
+	CHANNEL = "dAluControl[1]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 240;
 	TREE_LEVEL = 1;
 	PARENT = 237;
@@ -7548,9 +7419,9 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[28]";
+	CHANNEL = "dAluControl[0]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 241;
 	TREE_LEVEL = 1;
 	PARENT = 237;
@@ -7558,282 +7429,232 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[27]";
+	CHANNEL = "f3";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 242;
-	TREE_LEVEL = 1;
-	PARENT = 237;
+	TREE_LEVEL = 0;
+	CHILDREN = 243, 244, 245;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[26]";
+	CHANNEL = "f3[2]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 243;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 242;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[25]";
+	CHANNEL = "f3[1]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 244;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 242;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[24]";
+	CHANNEL = "f3[0]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 245;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 242;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[23]";
+	CHANNEL = "f7";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 246;
-	TREE_LEVEL = 1;
-	PARENT = 237;
+	TREE_LEVEL = 0;
+	CHILDREN = 247, 248, 249, 250, 251, 252, 253;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[22]";
+	CHANNEL = "f7[6]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 247;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 246;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[21]";
+	CHANNEL = "f7[5]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 248;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 246;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[20]";
+	CHANNEL = "f7[4]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 249;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 246;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[19]";
+	CHANNEL = "f7[3]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 250;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 246;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[18]";
+	CHANNEL = "f7[2]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 251;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 246;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[17]";
+	CHANNEL = "f7[1]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 252;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 246;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[16]";
+	CHANNEL = "f7[0]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Hexadecimal;
 	TREE_INDEX = 253;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 246;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[15]";
+	CHANNEL = "dAluOp";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 254;
-	TREE_LEVEL = 1;
-	PARENT = 237;
+	TREE_LEVEL = 0;
+	CHILDREN = 255, 256, 257, 258;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[14]";
+	CHANNEL = "dAluOp[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 255;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 254;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[13]";
+	CHANNEL = "dAluOp[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 256;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 254;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[12]";
+	CHANNEL = "dAluOp[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 257;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 254;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[11]";
+	CHANNEL = "dAluOp[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 258;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 254;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[10]";
+	CHANNEL = "dRegisterToWatch";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Unsigned;
 	TREE_INDEX = 259;
-	TREE_LEVEL = 1;
-	PARENT = 237;
+	TREE_LEVEL = 0;
+	CHILDREN = 260, 261, 262, 263, 264;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[9]";
+	CHANNEL = "dRegisterToWatch[4]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Unsigned;
 	TREE_INDEX = 260;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 259;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[8]";
+	CHANNEL = "dRegisterToWatch[3]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Unsigned;
 	TREE_INDEX = 261;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 259;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[7]";
+	CHANNEL = "dRegisterToWatch[2]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Unsigned;
 	TREE_INDEX = 262;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 259;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[6]";
+	CHANNEL = "dRegisterToWatch[1]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Unsigned;
 	TREE_INDEX = 263;
 	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 259;
 }
 
 DISPLAY_LINE
 {
-	CHANNEL = "dAluRegister[5]";
+	CHANNEL = "dRegisterToWatch[0]";
 	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
+	RADIX = Unsigned;
 	TREE_INDEX = 264;
 	TREE_LEVEL = 1;
-	PARENT = 237;
-}
-
-DISPLAY_LINE
-{
-	CHANNEL = "dAluRegister[4]";
-	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
-	TREE_INDEX = 265;
-	TREE_LEVEL = 1;
-	PARENT = 237;
-}
-
-DISPLAY_LINE
-{
-	CHANNEL = "dAluRegister[3]";
-	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
-	TREE_INDEX = 266;
-	TREE_LEVEL = 1;
-	PARENT = 237;
-}
-
-DISPLAY_LINE
-{
-	CHANNEL = "dAluRegister[2]";
-	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
-	TREE_INDEX = 267;
-	TREE_LEVEL = 1;
-	PARENT = 237;
-}
-
-DISPLAY_LINE
-{
-	CHANNEL = "dAluRegister[1]";
-	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
-	TREE_INDEX = 268;
-	TREE_LEVEL = 1;
-	PARENT = 237;
-}
-
-DISPLAY_LINE
-{
-	CHANNEL = "dAluRegister[0]";
-	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
-	TREE_INDEX = 269;
-	TREE_LEVEL = 1;
-	PARENT = 237;
+	PARENT = 259;
 }
 
 TIME_BAR

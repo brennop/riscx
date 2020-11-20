@@ -49,7 +49,7 @@ parameter
   FUNCT3_AND      = 3'b111,
 
   FUNCT7_ADD      = 7'b0000000,
-  FUNCT7_SUB      = 7'b0000000,
+  FUNCT7_SUB      = 7'b0100000,
   
   ALU_AND   = 4'b0000,
   ALU_OR    = 4'b0001,

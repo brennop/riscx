@@ -25,8 +25,7 @@ module MulticicloControl (
   output wire       WritePC,
   output wire       Branch,
   
-  output [3:0] oState,
-  output [3:0] oNextState
+  output [3:0] oState
 );
 
 reg   [0:3] state;       // o estado atual
@@ -38,7 +37,6 @@ begin
 end
 
 assign oState = state;
-assign oNextState = nextState;
 
 always @*
  case(state)
@@ -209,7 +207,7 @@ always @*
       ALUInputAOrigin           <= INPUT_A_REGISTER;
       ALUInputBOrigin           <= INPUT_B_REGISTER;
       ALUOp                	  <= OP_SUB;
-      PCOrigin                  <= PC_ALU;
+      PCOrigin                  <= PC_ALU_REG;
       WritePC                   <= FALSE; 
       Branch                    <= TRUE; 
 

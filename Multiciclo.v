@@ -11,6 +11,7 @@ module Multiciclo (
 	input clock,
 	
 	output [31:0] dInstruction,
+	input [4:0] dRegisterToWatch,
 	output [31:0] dRegister,
 	
 	output [31:0] dAddress,
@@ -19,6 +20,12 @@ module Multiciclo (
 	
 	output [3:0]  dState,
 	output [31:0] dAluResult,
+	
+	output [6:0] f7,
+	output [2:0] f3,
+	output [3:0] dAluControl,
+	output [3:0] dAluOp,
+
 	
 	output [31:0] dImmediate
 );
@@ -64,7 +71,7 @@ wire zero;
  
 wire [6:0]	opcode;
 wire [2:0]	funct3;
-wire [7:0]	funct7;
+wire [6:0]	funct7;
 wire [4:0]	rs1;
 wire [4:0]	rs2;
 wire [4:0]	rd;
@@ -192,8 +199,7 @@ MulticicloControl control (
 	.Branch(Branch),
 	
 	
-	.oState(dState),
-	.oNextState(dNextState)
+	.oState(dState)
 );
 
 // Controle da ALU
@@ -214,7 +220,8 @@ Registers registers (
 	.registerRead1(registerReadA), 
 	.registerRead2(registerReadB),
 	.dataToWrite(registerInputData),
-	.watch(dRegister)
+	.watchRegisterValue(dRegister),
+	.watchRegister(dRegisterToWatch)
 );
 
 // Gerador de Imediatos
@@ -242,6 +249,11 @@ begin
 	dReadData <= readData;
 	
 	dAddress <= address;
+	
+	f7 <= funct7;
+	f3 <= funct3;
+	dAluControl <= ALUControlSignal;
+	dAluOp		<= ALUOp;
 	
 	dAluResult <= aluResult;
 	dImmediate <= immediate;
