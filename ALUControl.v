@@ -33,7 +33,7 @@ always @*
 				FUNCT3_AND: oALUControl <= ALU_AND;
 				default: 	oALUControl <= ALU_ADD;
 			endcase
-		default: oALUControl <= ALU_ADD;
+		OP_FWD: oALUControl <= ALU_FWD;
 	endcase
 
 endmodule

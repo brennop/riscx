@@ -56,10 +56,18 @@ parameter
   ALU_ADD   = 4'b0010,
   ALU_SUB   = 4'b0110,
   ALU_SLT   = 4'b0111,
+  ALU_FWD   = 4'b1111,
+  
   
   OP_ADD	= 2'd0,
   OP_SUB	= 2'd1,
   OP_ANY = 2'd2,
+  OP_FWD = 2'd3,
+  
+  FORWARD_NONE = 2'd0,
+  FORWARD_MEM_WB = 2'd1,
+  FORWARD_EX_MEM = 2'd2,
+
   
   // Multi Control
   

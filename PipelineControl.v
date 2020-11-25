@@ -8,14 +8,8 @@
 */
 
 module Control (
-	input 	[6:0] opcode,
-	output 	[1:0] OrigWriteData,
-	output 	MemRead,
-	output 	[1:0] OrigPC,
-	output   [1:0] ALUOp,
-	output 	MemWrite,
-	output 	OrigALU,
-	output 	RegWrite
+	input  [6:0] opcode,
+	output [9:0] oControl
 );
 
 // O controle é um circuito combinacional
@@ -30,13 +24,7 @@ always @*
 		*/
 		LOAD:
 		begin
-			OrigWriteData <= ORIG_MEM;
-			MemRead <= TRUE;
-			OrigPC  <= PC4;
-			ALUOp <= OP_ADD;
-			MemWrite <= FALSE;
-			OrigALU <= ORIG_IMM;
-			RegWrite <= TRUE;
+			oControl <= { ORIG_IMM, OP_ADD, FALSE, TRUE, PC4, TRUE, ORIG_MEM};
 		end
 		/* 
 			no store precisamos somar um IMM e um reg,
@@ -45,13 +33,7 @@ always @*
 		*/
 		STORE:
 		begin
-			OrigWriteData <= ORIG_ALU;
-			MemRead <= FALSE;
-			OrigPC  <= PC4;
-			ALUOp   <= OP_ADD;
-			MemWrite <= TRUE;
-			OrigALU <= ORIG_IMM;
-			RegWrite <= FALSE;
+			oControl <= { ORIG_IMM, OP_ADD, TRUE, FALSE, PC4, FALSE, ORIG_ALU};
 		end
 		/* 
 			nas instruções Tipo-R (add, sub, and, or, slt),
@@ -62,13 +44,7 @@ always @*
 		*/
 		TIPOR:
 		begin
-			OrigWriteData <= ORIG_ALU;
-			MemRead <= FALSE;
-			OrigPC  <= PC4;
-			MemWrite <= FALSE;
-			OrigALU <= ORIG_REG;
-			RegWrite <= TRUE;
-			ALUOp   <= OP_ANY;
+			oControl <= { ORIG_REG, OP_ANY, FALSE, FALSE, PC4, TRUE, ORIG_ALU};
 		end
 		/* 
 			a instrução lui (tipo U) sinaliza para ALU realizar
@@ -78,13 +54,7 @@ always @*
 		*/
 		TIPOU:
 		begin
-			OrigWriteData <= ORIG_LUI;
-			MemRead <= FALSE;
-			OrigPC  <= PC4;
-			MemWrite <= FALSE;
-			OrigALU <= ORIG_IMM;
-			RegWrite <= TRUE;
-			ALUOp   <= OP_ADD;
+			oControl <= { ORIG_IMM, OP_FWD, FALSE, FALSE, PC4, TRUE, ORIG_LUI};
 		end
 		/* 
 			em um branch sinalizamos que o pc deve receber
@@ -92,13 +62,7 @@ always @*
 		*/
 		BRANCH:
 		begin
-			OrigWriteData <= ORIG_ALU;
-			MemRead <= FALSE;
-			OrigPC  <= PCBEQ;
-			ALUControl <= ALU_SUB;
-			MemWrite <= FALSE;
-			ALUOp   <= OP_SUB;
-			RegWrite <= FALSE;
+			oControl <= { ORIG_IMM, OP_SUB, FALSE, FALSE, PCBEQ, FALSE, ORIG_ALU};
 		end
 		/* 
 			em um jal sinalizamos que o pc deve receber
@@ -107,23 +71,11 @@ always @*
 		*/
 		JUMP:
 		begin
-			OrigWriteData <= ORIG_PC4;
-			MemRead <= FALSE;
-			OrigPC  <= PCIMM;
-			ALUControl <= ALU_ADD;
-			MemWrite <= FALSE;
-			ALUOp   <= OP_ADD;
-			RegWrite <= TRUE;
+			oControl <= { ORIG_IMM, OP_ADD, FALSE, FALSE, PCIMM, TRUE, ORIG_LUI};
 		end
 		default:
 		begin
-			OrigWriteData <= ORIG_ALU;
-			MemRead <= DONT_CARE;
-			OrigPC  <= PC4;
-			ALUOp   <= OP_ADD;
-			MemWrite <= DONT_CARE;
-			OrigALU <= DONT_CARE;
-			RegWrite <= DONT_CARE;
+			oControl <= 10'b0;
 		end
 	endcase
 

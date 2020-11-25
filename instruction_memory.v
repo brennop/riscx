@@ -41,7 +41,7 @@ end
 // Precisamos deslocar o endereço para a esquerda 
 // (dividir por 2) já que nossa memória não é 
 // byte addressing assim como o PC 
-assign instruction = MI[address>>2];
+assign instruction = MI[(address - TEXT)>>2];
 
 // Só precisamos da leitura já que 
 // nossa memória de instruções não
