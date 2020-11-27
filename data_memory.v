@@ -47,10 +47,6 @@ end
 // Se a leitura estiver habilitada, colocamos
 // em oData o valor da memória no endereço address
 assign oData = read ? MD[address] : 32'b0;
-// Por alguma otimização do quartus, isso
-// causa um aumento do tempo de compilação
-// em 4x (1:47 vs 7:48) comprada a uma 
-// leitura síncrona
 
 
 endmodule

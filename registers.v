@@ -64,7 +64,7 @@ assign registerRead2 = registers[rs2]; 	// Valor do registrador RS2
 assign watchRegisterValue = registers[watchRegister];						// Registrador a ser mostrado no wvf
 
 // Escrita síncrona
-always @(posedge clock) 
+always @(negedge clock) 
 begin
 	// Se o write estiver habilitado e não estiver no reg ZERO
 	// escrevemos o valor do dataToWrite no registrador RD

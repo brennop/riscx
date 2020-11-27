@@ -95,7 +95,7 @@ always @*
 			OrigWriteData <= ORIG_ALU;
 			MemRead <= FALSE;
 			OrigPC  <= PCBEQ;
-			ALUControl <= ALU_SUB;
+			OrigALU <= ORIG_IMM;
 			MemWrite <= FALSE;
 			ALUOp   <= OP_SUB;
 			RegWrite <= FALSE;
@@ -110,7 +110,7 @@ always @*
 			OrigWriteData <= ORIG_PC4;
 			MemRead <= FALSE;
 			OrigPC  <= PCIMM;
-			ALUControl <= ALU_ADD;
+			OrigALU <= ORIG_IMM;
 			MemWrite <= FALSE;
 			ALUOp   <= OP_ADD;
 			RegWrite <= TRUE;

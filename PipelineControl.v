@@ -7,7 +7,7 @@
 	_Controle_
 */
 
-module Control (
+module PipelineControl (
 	input  [6:0] opcode,
 	output [9:0] oControl
 );
@@ -24,7 +24,7 @@ always @*
 		*/
 		LOAD:
 		begin
-			oControl <= { ORIG_IMM, OP_ADD, FALSE, TRUE, PC4, TRUE, ORIG_MEM};
+			oControl <= { PC4, ORIG_IMM, OP_ADD, FALSE, TRUE, TRUE, ORIG_MEM};
 		end
 		/* 
 			no store precisamos somar um IMM e um reg,
@@ -33,7 +33,7 @@ always @*
 		*/
 		STORE:
 		begin
-			oControl <= { ORIG_IMM, OP_ADD, TRUE, FALSE, PC4, FALSE, ORIG_ALU};
+			oControl <= { PC4, ORIG_IMM, OP_ADD, TRUE, FALSE, FALSE, ORIG_ALU};
 		end
 		/* 
 			nas instruções Tipo-R (add, sub, and, or, slt),
@@ -44,7 +44,7 @@ always @*
 		*/
 		TIPOR:
 		begin
-			oControl <= { ORIG_REG, OP_ANY, FALSE, FALSE, PC4, TRUE, ORIG_ALU};
+			oControl <= { PC4, ORIG_REG, OP_ANY, FALSE, FALSE, TRUE, ORIG_ALU};
 		end
 		/* 
 			a instrução lui (tipo U) sinaliza para ALU realizar
@@ -54,7 +54,7 @@ always @*
 		*/
 		TIPOU:
 		begin
-			oControl <= { ORIG_IMM, OP_FWD, FALSE, FALSE, PC4, TRUE, ORIG_LUI};
+			oControl <= { PC4, ORIG_IMM, OP_FWD, FALSE, FALSE, TRUE, ORIG_ALU};
 		end
 		/* 
 			em um branch sinalizamos que o pc deve receber
@@ -62,7 +62,7 @@ always @*
 		*/
 		BRANCH:
 		begin
-			oControl <= { ORIG_IMM, OP_SUB, FALSE, FALSE, PCBEQ, FALSE, ORIG_ALU};
+			oControl <= { PCBEQ, ORIG_IMM, OP_SUB, FALSE, FALSE, FALSE, ORIG_ALU};
 		end
 		/* 
 			em um jal sinalizamos que o pc deve receber
@@ -71,7 +71,7 @@ always @*
 		*/
 		JUMP:
 		begin
-			oControl <= { ORIG_IMM, OP_ADD, FALSE, FALSE, PCIMM, TRUE, ORIG_LUI};
+			oControl <= { PCIMM, ORIG_IMM, OP_ADD, FALSE, FALSE, TRUE, ORIG_ALU};
 		end
 		default:
 		begin

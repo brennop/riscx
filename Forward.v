@@ -13,39 +13,44 @@ module ForwardingUnit (
   input wire [4:0] rs1,
   input wire [4:0] rs2,
   
-  input wire [4:0] EX_MEM.rd,
-  input wire [4:0] MEM_WB.rd,
+  input wire [4:0] EX_MEM_rd,
+  input wire [4:0] MEM_WB_rd,
   
-  input EX_MEM.RegWrite,
-  input MEM_WB.RegWrite,
+  input EX_MEM_RegWrite,
+  input MEM_WB_RegWrite,
   
   output [1:0] forwardA,
-  output [1:0] forwardB,
+  output [1:0] forwardB
 );
 
+always @*
+	begin
+		if(EX_MEM_RegWrite
+			&& EX_MEM_rd != 32'b0
+			&& EX_MEM_rd == rs1)
+			forwardA <= FORWARD_EX_MEM;
 
-if(EX_MEM.RegWrite
-	&& EX_MEM.rd != 32'b0
-	&& EX_MEM.rd == rs1))
-	assign forwardA = FORWARD_EX_MEM;
+		else if(MEM_WB_RegWrite
+			&& MEM_WB_rd != 32'b0
+			&& MEM_WB_rd == rs1)
+			forwardA <= FORWARD_MEM_WB;
 
-else if(MEM_WB.RegWrite
-	&& MEM_WB.rd != 32'b0
-	&& MEM_WB.rd == rs1))
-	assign forwardA = FORWARD_MEM_WB;
+		else forwardA <= FORWARD_NONE;
+	end
 
-else assign forwardA = FORWARD_NONE;
+always @*
+	begin
+		if(EX_MEM_RegWrite
+			&& EX_MEM_rd != 32'b0
+			&& EX_MEM_rd == rs2)
+			forwardB <= FORWARD_EX_MEM;
 
-if(EX_MEM.RegWrite
-	&& EX_MEM.rd != 32'b0
-	&& EX_MEM.rd == rs2))
-	assign forwardB = FORWARD_EX_MEM;
+		else if(MEM_WB_RegWrite
+			&& MEM_WB_rd != 32'b0
+			&& MEM_WB_rd == rs2)
+			forwardB <= FORWARD_MEM_WB;
 
-else if(MEM_WB.RegWrite
-	&& MEM_WB.rd != 32'b0
-	&& MEM_WB.rd == rs2))
-	assign forwardB = FORWARD_MEM_WB;
-
-else assign forwardB = FORWARD_NONE;
+		else forwardB <= FORWARD_NONE;
+	end
 
 endmodule
