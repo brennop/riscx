@@ -13,7 +13,7 @@ module Pipeline (
 	
 	output [31:0] dInstruction,
 	output [31:0] dInstructionID,
-	output [31:0] dInstructionEX,
+//	output [31:0] dInstructionEX,
 //	output [31:0] dInstructionMEM,
 //	output [31:0] dInstructionWB,
 	output [31:0] dPC,
@@ -53,7 +53,7 @@ begin
 	dID_EX_Control <= ID_EX_Control;
 	
 	dInstructionID <= IF_ID_Instruction;
-	dInstructionEX <= ID_EX_Instruction;
+//	dInstructionEX <= ID_EX_Instruction;
 //	dInstructionMEM <= EX_MEM_Instruction;
 //	dInstructionWB <= MEM_WB_Instruction;
 	
@@ -199,7 +199,7 @@ begin
 	/* EX_MEM */
 	EX_MEM_Instruction 	<= ID_EX_Instruction;
 	EX_MEM_ALUResult 		<= aluResult;
-	EX_MEM_registerReadB <= ID_EX_registerReadB;
+	EX_MEM_registerReadB <= forwardBOutput;
 
 	/* MEM_WB */
 	MEM_WB_Instruction 	<= EX_MEM_Instruction;
@@ -382,21 +382,6 @@ ForwardingUnit fuBeq (
   .forwardB(ForwardBranchB)
 );
 
-// Forwarding
-/*
-ForwardingUnit fuBeq (
-  .rs1(IF_ID_Instruction[19:15]),
-  .rs2(IF_ID_Instruction[24:20]),
-  
-  .EX_MEM_rd(EX_MEM_Instruction[11:7]),
-  .MEM_WB_rd(MEM_WB_Instruction[11:7]),
-  
-  .EX_MEM_RegWrite(EX_MEM_Control[2]),
-  .MEM_WB_RegWrite(MEM_WB_Control[2]),
-  
-  .forwardA(ForwardA),
-  .forwardB(ForwardB)
-);*/
 
 HazardDetection hd (
   .opcode(IF_ID_Instruction[6:0]),
