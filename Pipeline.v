@@ -9,28 +9,34 @@
 
 module Pipeline (
 	input clock,
+	input clock2,
 	
 	output [31:0] dInstruction,
 	output [31:0] dInstructionID,
-//	output [31:0] dInstructionEX,
+	output [31:0] dInstructionEX,
 //	output [31:0] dInstructionMEM,
 //	output [31:0] dInstructionWB,
 	output [31:0] dPC,
 	
-//	output [9:0] dControl,
+	output [9:0] dControl,
 	output [9:0] dID_EX_Control,
 
 	input  [4:0]  dRegisterToWatch,
 	output [31:0] dRegister,
 	
-	output [31:0] dAluInputA,
-	output [31:0] dAluInputB,
-	
-	output [1:0] dForwardA,
-	output [1:0] dForwardB,
-	
-	output [31:0] dID_EX_registerReadA,
-	output [4:0] rs1,
+	output dEQ,
+//	
+//	output [31:0] dAluInputA,
+//	output [31:0] dAluInputB,
+//	
+//	output [1:0] dForwardA,
+//	output [1:0] dForwardB,
+//	
+	output [31:0] dRegisterReadA,
+	output [31:0] dRegisterReadB,
+//	output [4:0] rs1,
+//	
+//	output [31:0] dRegisterInputData,
 
 	output [31:0] dAluResult
 );
@@ -40,24 +46,30 @@ always @*
 begin
 	dInstruction <= instruction;
 	dPC <= PC;
-//	dControl <= control;
+	
+	dControl <= control;
 	dID_EX_Control <= ID_EX_Control;
 	
 	dInstructionID <= IF_ID_Instruction;
-//	dInstructionEX <= ID_EX_Instruction;
+	dInstructionEX <= ID_EX_Instruction;
 //	dInstructionMEM <= EX_MEM_Instruction;
 //	dInstructionWB <= MEM_WB_Instruction;
-
-	dAluInputA <= aluInputA;
-	dAluInputB <= aluInputB;
 	
-	dForwardA <= ForwardA;
-	dForwardB <= ForwardB;
+	dEQ <= EQ;
 
-//	dReadData <= readData;
-	dID_EX_registerReadA <= registerReadA;
-	rs1 <= IF_ID_Instruction[19:15];
-	
+//	dAluInputA <= aluInputA;
+//	dAluInputB <= aluInputB;
+//	
+//	dForwardA <= ForwardA;
+//	dForwardB <= ForwardB;
+//
+////	dReadData <= readData;
+	dRegisterReadB <= registerReadB;
+	dRegisterReadA <= registerReadA;
+//	rs1 <= IF_ID_Instruction[24:20];
+//	
+//	dRegisterInputData <= registerInputData;
+//	
 	dAluResult <= aluResult;
 end
 
@@ -101,15 +113,17 @@ wire [31:0] instruction;
 wire [31:0] nextPC;
 wire [31:0] immediate;
 
-wire [31:0] pc4 = PC + 4;		
+wire [31:0] pc4 = PC + 32'd4;		
 wire [31:0] pcImm = IF_ID_PC + immediate;	
 
-wire EQ = registerReadA == registerReadB;
+wire EQ = registerReadB == registerReadA;
 
 /* Banco de Registradores */
 wire [31:0] registerInputData;// Dado a ser escrito em rd
 wire [31:0] registerReadA;
 wire [31:0] registerReadB;
+
+wire [31:0] forwardBOutput;
 
 /* ALU */
 wire [31:0] aluInputA;
@@ -212,17 +226,20 @@ always @*
 	
 // Forward B
 always @*
-case(ID_EX_Control[7])
-	ORIG_REG:
-	case(ForwardB)
-		FORWARD_EX_MEM: aluInputB <= EX_MEM_ALUResult;
-		FORWARD_MEM_WB: aluInputB <= registerInputData;
-		FORWARD_NONE: 	 aluInputB <= ID_EX_registerReadB;	
-		default: 		 aluInputB <= 32'b0;
-	endcase
-	ORIG_IMM: aluInputB <= ID_EX_Immediate;
+case(ForwardB)
+	FORWARD_EX_MEM: forwardBOutput <= EX_MEM_ALUResult;
+	FORWARD_MEM_WB: forwardBOutput <= registerInputData;
+	FORWARD_NONE: 	 forwardBOutput <= ID_EX_registerReadB;	
+	default: 		 forwardBOutput <= 32'b0;
 endcase
 
+
+// Forward B
+always @*
+case(ID_EX_Control[7])
+	ORIG_REG: aluInputB <= forwardBOutput;
+	ORIG_IMM: aluInputB <= ID_EX_Immediate;
+endcase
 
 // registerInputData
 always @*
@@ -257,7 +274,7 @@ DataMemory dataMemory (
 
 // Banco de Registradores
 Registers registers (
-	.clock(clock),
+	.clock(clock2),
 	.writeRegister(MEM_WB_Control[2]),
 	.rs1(IF_ID_Instruction[19:15]),
 	.rs2(IF_ID_Instruction[24:20]),
@@ -311,6 +328,22 @@ ForwardingUnit fu (
   .forwardA(ForwardA),
   .forwardB(ForwardB)
 );
+
+// Forwarding
+/*
+ForwardingUnit fuBeq (
+  .rs1(IF_ID_Instruction[19:15]),
+  .rs2(IF_ID_Instruction[24:20]),
+  
+  .EX_MEM_rd(EX_MEM_Instruction[11:7]),
+  .MEM_WB_rd(MEM_WB_Instruction[11:7]),
+  
+  .EX_MEM_RegWrite(EX_MEM_Control[2]),
+  .MEM_WB_RegWrite(MEM_WB_Control[2]),
+  
+  .forwardA(ForwardA),
+  .forwardB(ForwardB)
+);*/
 
 HazardDetection hd (
   .opcode(IF_ID_Instruction[6:0]),

@@ -3,7 +3,7 @@
 	Banco de Registradores
 */
 
-module Registers (
+module Registers2 (
 	input wire clock,  								// o clock, para escrita síncrona
 	input wire writeRegister,					// sinal de controle para habilitar a escrita 
 	input wire [4:0] rs1, rs2, rd,		// registradores de fonte e destino	
@@ -59,12 +59,13 @@ begin
 	registers[31] = 32'd0;
 end
 
-always @*
+always @(posedge clock)
 begin
 	registerRead1 <= registers[rs1]; 	// Valor do registrador RS1
 	registerRead2 <= registers[rs2]; 	// Valor do registrador RS2
-	watchRegisterValue <= registers[watchRegister];						// Registrador a ser mostrado no wvf
 end
+
+assign	watchRegisterValue = registers[watchRegister];						// Registrador a ser mostrado no wvf
 
 
 // Escrita síncrona
