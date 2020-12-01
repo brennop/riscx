@@ -38,6 +38,8 @@ module Pipeline (
 //	
 //	output [31:0] dRegisterInputData,
 
+	output [3:0] forwardBranch,
+
 	output [31:0] dAluResult
 );
 
@@ -64,9 +66,11 @@ begin
 //	dForwardB <= ForwardB;
 //
 ////	dReadData <= readData;
-	dRegisterReadB <= registerReadB;
-	dRegisterReadA <= registerReadA;
+	dRegisterReadB <= branchInputB;
+	dRegisterReadA <= branchInputA;
 //	rs1 <= IF_ID_Instruction[24:20];
+
+	forwardBranch <= {ForwardBranchA, ForwardBranchB};
 //	
 //	dRegisterInputData <= registerInputData;
 //	
@@ -116,7 +120,7 @@ wire [31:0] immediate;
 wire [31:0] pc4 = PC + 32'd4;		
 wire [31:0] pcImm = IF_ID_PC + immediate;	
 
-wire EQ = registerReadB == registerReadA;
+wire EQ = branchInputA == branchInputB;
 
 /* Banco de Registradores */
 wire [31:0] registerInputData;// Dado a ser escrito em rd
@@ -124,6 +128,8 @@ wire [31:0] registerReadA;
 wire [31:0] registerReadB;
 
 wire [31:0] forwardBOutput;
+
+wire [31:0] forwardRegisterInputData;
 
 /* ALU */
 wire [31:0] aluInputA;
@@ -152,6 +158,12 @@ reg [2:0] MEM_WB_Control;
 
 wire [1:0] ForwardA;
 wire [1:0] ForwardB;
+
+wire [1:0] ForwardBranchA;
+wire [1:0] ForwardBranchB;
+
+wire [31:0] branchInputA;
+wire [31:0] branchInputB;
 
 /* Hazard Detection */
 
@@ -241,12 +253,38 @@ case(ID_EX_Control[7])
 	ORIG_IMM: aluInputB <= ID_EX_Immediate;
 endcase
 
+// Forward Branch A
+always @*
+	case(ForwardBranchA)
+		FORWARD_EX_MEM: branchInputA <= aluResult;
+		FORWARD_MEM_WB: branchInputA <= forwardRegisterInputData;
+		FORWARD_NONE: 	 branchInputA <= registerReadA;
+		default: 		 branchInputA <= 32'b0;
+	endcase
+	
+// Forward Branch B
+always @*
+	case(ForwardBranchB)
+		FORWARD_EX_MEM: branchInputB <= aluResult;
+		FORWARD_MEM_WB: branchInputB <= forwardRegisterInputData;
+		FORWARD_NONE: 	 branchInputB <= registerReadB;	
+		default: 		 branchInputB <= 32'b0;
+	endcase
+
 // registerInputData
 always @*
 	case(MEM_WB_Control[1:0])
 		ORIG_ALU: registerInputData <= MEM_WB_ALUResult;
 		ORIG_MEM: registerInputData <= MEM_WB_ReadData;
 		default: registerInputData <= MEM_WB_ALUResult;
+	endcase
+
+// ForwardRegisterInputData
+always @*
+	case(EX_MEM_Control[1:0])
+		ORIG_ALU: forwardRegisterInputData <= EX_MEM_ALUResult;
+		ORIG_MEM: forwardRegisterInputData <= readData;
+		default: forwardRegisterInputData <= EX_MEM_ALUResult;
 	endcase
 	
 /*
@@ -327,6 +365,21 @@ ForwardingUnit fu (
   
   .forwardA(ForwardA),
   .forwardB(ForwardB)
+);
+
+// Forwarding
+ForwardingUnit fuBeq (
+  .rs1(IF_ID_Instruction[19:15]),
+  .rs2(IF_ID_Instruction[24:20]),
+  
+  .EX_MEM_rd(ID_EX_Instruction[11:7]),
+  .MEM_WB_rd(EX_MEM_Instruction[11:7]),
+  
+  .EX_MEM_RegWrite(ID_EX_Control[2]),
+  .MEM_WB_RegWrite(EX_MEM_Control[2]),
+  
+  .forwardA(ForwardBranchA),
+  .forwardB(ForwardBranchB)
 );
 
 // Forwarding
