@@ -17,8 +17,12 @@ module Memory (
 );
  
 // A memória é implementada como um array de 512 posições
+// Posições 0..255 são de instruções
+// Posições 256..511 são de dados
 reg [31:0] memory[0:511];
 
+// Inciamos a memória de dados/instruções com os segmentos
+// .data/.text do nosso TestBench
 initial
 begin
 memory[0]=32'h10010437;   // 			lui s0, 0x10010 	# carregar o começo do .data em s0
@@ -47,21 +51,19 @@ memory[258] = 32'd50;
 memory[259] = 32'd305;	        
 end
 
+// Fazemos a tradução do endereço i.e. mapeamos endereços de 
+// 0x00400000..0x00400400 a 0..255 e  0x10010000..0x10010400 a 256..512
 wire [31:0] address;
-
 assign address = ((iAddress < DATA) ? (iAddress - TEXT) : (iAddress - DATA + 1024)) >> 2;
 
+// Escrevemos na borda de subida quando `write` está ativado
 always @(posedge clock)
 begin
 	if(write) 	memory[address] <= iData;
 end
 
-always @(negedge clock)
-begin
-	if(read) oData <= memory[address];
-end
-
-//assign oData = read ? memory[address] : 32'b0;
+// A leitura é na borda de descida quando `read` está ativado
+assign oData = read ? memory[address] : 32'b0;
 assign oAddress = address;
 
 endmodule

@@ -10,6 +10,7 @@
 module Multiciclo (
 	input clock,
 	
+  // Outputs de DEBUG
 	output [31:0] dInstruction,
 	input [4:0] dRegisterToWatch,
 	output [31:0] dRegister,
@@ -26,7 +27,6 @@ module Multiciclo (
 	output [3:0] dAluControl,
 	output [3:0] dAluOp,
 
-	
 	output [31:0] dImmediate
 );
 
@@ -34,34 +34,33 @@ module Multiciclo (
  *		Registradores
  */
  
-reg [31:0] PC = TEXT;
-reg [31:0] CurrentPC;
+reg [31:0] PC = TEXT; // PC
+reg [31:0] CurrentPC; // PCback
 
-reg [31:0] InstructionRegister;
-reg [31:0] DataRegister;
+reg [31:0] InstructionRegister; // Registrador de Instrução
+reg [31:0] DataRegister;        // Registrador de Dados
 
-reg [31:0] RegisterReadA;
-reg [31:0] RegisterReadB;
+reg [31:0] RegisterReadA;       // Dado lido do registrador
+reg [31:0] RegisterReadB;       // Dado lido do registrador
 
-reg [31:0] ALURegister;
-
+reg [31:0] ALURegister; // Saida da ULA
 
 /*
  *		Sinais/Fios do Datapath
  */
  
 wire [31:0]	nextData;			 
-wire [31:0] address;				// Endereço da memória
-wire [31:0] readData;			// Dado lido da memória
-wire [31:0] registerInputData;// Dado a ser escrito em rd
-wire [31:0] immediate;			// Imediato gerado 
+wire [31:0] address;				    // Endereço da memória
+wire [31:0] readData;			      // Dado lido da memória
+wire [31:0] registerInputData;  // Dado a ser escrito em rd
+wire [31:0] immediate;			    // Imediato gerado 
 
-wire [31:0] registerReadA;
-wire [31:0] registerReadB;
+wire [31:0] registerReadA;      // Dado lido do registrador
+wire [31:0] RegisterReadB;      // Dado lido do registrador
 
-wire [31:0] aluInputA;
-wire [31:0] aluInputB;
-wire [31:0] aluResult;
+wire [31:0] aluInputA;          // Entrada da ULA
+wire [31:0] aluInputB;          // Entrada da ULA
+wire [31:0] aluResult;          // Resultado da ULA
 wire zero;
 
 
@@ -81,8 +80,8 @@ begin
 	opcode <= InstructionRegister[6:0];
 	funct3 <= InstructionRegister[14:12];
 	funct7 <= InstructionRegister[31:25];
-	rs1	 <= InstructionRegister[19:15];
-	rs2	 <= InstructionRegister[24:20];
+	rs1	   <= InstructionRegister[19:15];
+	rs2	   <= InstructionRegister[24:20];
 	rd     <= InstructionRegister[11:7];
 end
 
@@ -110,12 +109,14 @@ wire 		  PCOrigin;							// Origem do dado a ser escrito em PC
  *		Multiplexadores
  */
 
+// Origem do que será escrito em PC
 always @*
 	case(PCOrigin)
 		PC_ALU:		nextData <= aluResult;
 		PC_ALU_REG:	nextData <= ALURegister;
 	endcase
 
+// Origem do que será escrito em rd
 always @*
 	case(RegisterInputOrigin)
 		REGISTER_ALU:		registerInputData <= ALURegister;
@@ -125,6 +126,7 @@ always @*
 		default:				registerInputData <= 32'b0; // DONT-CARE
 	endcase
  
+// Origem A da ULA
 always @*
 	case(ALUInputAOrigin)
 		INPUT_A_CURRENT_PC:	aluInputA <= CurrentPC;
@@ -133,6 +135,7 @@ always @*
 		default:					aluInputA <= 32'b0; // DONT-CARE
 	endcase
  
+// Origem B da ULA
 always @*
 	case(ALUInputBOrigin)
 		INPUT_B_REGISTER:		aluInputB <= RegisterReadB;
@@ -141,6 +144,7 @@ always @*
 		default:					aluInputB <= 32'b0; // DONT-CARE
 	endcase
 
+// Origem do endereço da memória
 always @*
 	case(MemoryAddressOrigin)
 		ADDRESS_PC:			address <= PC;
@@ -153,10 +157,11 @@ always @*
 
 always @(posedge clock)
 begin
-	if(WritePC || (Branch && zero)) 	PC <= nextData;
-	if(WriteCurrentPC) 					CurrentPC <= PC;
-	if(WriteInstructionRegister)		InstructionRegister <= readData;
+	if(WritePC || (Branch && zero)) 	PC <= nextData; // Branch/Jump tomado
+	if(WriteCurrentPC) 					CurrentPC <= PC;      // Escrita no PC
+	if(WriteInstructionRegister)		InstructionRegister <= readData; // Instrução
 	
+  // demais registradores sem sinais de escrita
 	DataRegister <= readData;
 	ALURegister <= aluResult;
 	RegisterReadA <= registerReadA;

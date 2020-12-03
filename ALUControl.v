@@ -16,10 +16,12 @@ module ALUControl (
   output [3:0] oALUControl
 );
 
+// Controle da ALU é um circuito combinacional
 always @*
 	case(iALUOp)
 		OP_ADD: oALUControl <= ALU_ADD;
 		OP_SUB: oALUControl <= ALU_SUB;
+    // No caso OP_ANY, decidimos a operação da ALU pela instrução (funct3 e 7)
 		OP_ANY:
 			case(funct3)
 				FUNCT3_ADD: 
