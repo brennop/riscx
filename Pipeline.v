@@ -9,7 +9,6 @@
 
 module Pipeline (
 	input clock,
-	input clock2,
 	
 	output [31:0] dInstruction,
 	output [31:0] dInstructionID,
@@ -312,7 +311,7 @@ DataMemory dataMemory (
 
 // Banco de Registradores
 Registers registers (
-	.clock(clock2),
+	.clock(clock),
 	.writeRegister(MEM_WB_Control[2]),
 	.rs1(IF_ID_Instruction[19:15]),
 	.rs2(IF_ID_Instruction[24:20]),
