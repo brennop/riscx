@@ -28,15 +28,21 @@ module HazardDetection (
 // com registrador indisponível
 always @*
 begin
+  // Se há está ocorrento uma leitura
+  // em um registrador que será utilizado
 	if(ID_EX_MemRead && 
 		(ID_EX_rd == rs1 || 
 		 ID_EX_rd == rs2 ))
 		 begin
+       // Seta o mux para zerar o controle
 			ControlReset <= TRUE;
+      // Desativa o write das duas primeiras etapas
+      // para realizar um stall
 			IF_IDWrite 	 <= FALSE;
 			PCWrite 		 <= FALSE;
 		 end
 
+  // funcionamento normal
 	else
 		begin
 			ControlReset <= FALSE;
@@ -45,6 +51,7 @@ begin
 		end
 end
 
+// Branch será realizado
 assign IF_Flush = (opcode == BRANCH && EQ);
 
 endmodule

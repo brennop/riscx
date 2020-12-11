@@ -10,11 +10,9 @@
 module Pipeline (
 	input clock,
 	
+  // Sinais de Debug
 	output [31:0] dInstruction,
 	output [31:0] dInstructionID,
-//	output [31:0] dInstructionEX,
-//	output [31:0] dInstructionMEM,
-//	output [31:0] dInstructionWB,
 	output [31:0] dPC,
 	
 	output [9:0] dControl,
@@ -24,25 +22,14 @@ module Pipeline (
 	output [31:0] dRegister,
 	
 	output dEQ,
-//	
-//	output [31:0] dAluInputA,
-//	output [31:0] dAluInputB,
-//	
-//	output [1:0] dForwardA,
-//	output [1:0] dForwardB,
-//	
 	output [31:0] dRegisterReadA,
 	output [31:0] dRegisterReadB,
-//	output [4:0] rs1,
-//	
-//	output [31:0] dRegisterInputData,
-
 	output [3:0] forwardBranch,
 
 	output [31:0] dAluResult
 );
 
-
+// Sinais de Debug
 always @*
 begin
 	dInstruction <= instruction;
@@ -52,27 +39,12 @@ begin
 	dID_EX_Control <= ID_EX_Control;
 	
 	dInstructionID <= IF_ID_Instruction;
-//	dInstructionEX <= ID_EX_Instruction;
-//	dInstructionMEM <= EX_MEM_Instruction;
-//	dInstructionWB <= MEM_WB_Instruction;
 	
 	dEQ <= EQ;
-
-//	dAluInputA <= aluInputA;
-//	dAluInputB <= aluInputB;
-//	
-//	dForwardA <= ForwardA;
-//	dForwardB <= ForwardB;
-//
-////	dReadData <= readData;
 	dRegisterReadB <= branchInputB;
 	dRegisterReadA <= branchInputA;
-//	rs1 <= IF_ID_Instruction[24:20];
-
 	forwardBranch <= {ForwardBranchA, ForwardBranchB};
-//	
-//	dRegisterInputData <= registerInputData;
-//	
+
 	dAluResult <= aluResult;
 end
 
@@ -181,8 +153,7 @@ begin
 	if(PCWrite) PC <= nextPC;
 	
 	/* IF_ID */
-	// TODO: Verificar bug aqui
-	if(IF_IDWrite)
+	if(IF_IDWrite) 
 		begin
 			IF_ID_Instruction <= IF_Flush ? 32'h00000033 : instruction;
 			IF_ID_PC <= PC;
@@ -243,7 +214,6 @@ case(ForwardB)
 	FORWARD_NONE: 	 forwardBOutput <= ID_EX_registerReadB;	
 	default: 		 forwardBOutput <= 32'b0;
 endcase
-
 
 // Forward B
 always @*

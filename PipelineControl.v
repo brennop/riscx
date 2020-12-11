@@ -13,7 +13,7 @@ module PipelineControl (
 );
 
 // O controle é um circuito combinacional
-// depende apenas do opcode, funct3 e funct7
+// depende apenas do opcode
 always @*
 	case(opcode)
 		/* 

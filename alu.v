@@ -12,12 +12,8 @@ module ALU (
 	input 		 	[3:0]  iControl,
 	input signed 	[31:0] iA, 
 	input signed 	[31:0] iB,
-	output 		 	[31:0] oResult,
-	output			oZero
+	output 		 	[31:0] oResult
 );
-
-// TODO: Verificar otimização
-assign oZero = ~| oResult;
 
 // A ALU é um circuito combinacional
 always @*
